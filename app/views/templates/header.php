@@ -30,9 +30,10 @@
         </div>
         <div class="flex-1 px-2 mx-2 font-bold text-xl">Jurnal UNIKOM</div>
         <div class="flex-none hidden lg:block">
-          <ul class="menu menu-horizontal">
+          <ul class="menu menu-horizontal font-semibold">
             <!-- Navbar menu content here -->
-            <li><a href="<?= BASEURL; ?>">Google Schoolar</a></li>
+            <li><a href="<?= BASEURL; ?>">Dashboard</a></li>
+            <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
             <li><a href="<?= BASEURL; ?>/menu">Menu</a></li>
             <li><a href="<?= BASEURL; ?>/about">About</a></li>
           </ul>

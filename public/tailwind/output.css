@@ -2032,6 +2032,10 @@ html {
   height: 1.5rem;
 }
 
+.max-h-screen {
+  max-height: 100vh;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -2073,12 +2077,24 @@ html {
   flex: none;
 }
 
+.table-auto {
+  table-layout: auto;
+}
+
 .table-fixed {
   table-layout: fixed;
 }
 
 .flex-col {
   flex-direction: column;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
 }
 
 .bg-base-200 {
@@ -2155,6 +2171,10 @@ html {
 
 .font-bold {
   font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 .normal-case {

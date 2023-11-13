@@ -1,7 +1,7 @@
 <?php 
 
 class App {
-    protected $controller = 'Home';
+    protected $controller = 'Dashboard';
     protected $method = 'index';
     protected $params = [];
 
@@ -41,6 +41,7 @@ class App {
     public function parseURL()
     {
         if (isset($_GET['url'])) {
+            // $url = 'http://kp-angga.test/home/getDataTable?page=1&length=10&search[value]=&order[0][column]=0&order[0][dir]=asc';
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
