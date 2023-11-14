@@ -1,6 +1,6 @@
  <!-- Page content here -->
- <div class="px-5 mt-5 overflow-x">
-     <table id="myTable" class="display  overflow-scroll w-full">
+ <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
+     <table id="myTable" class="display overflow-scroll w-full">
          <thead>
              <tr class="text-xs">
                  <th>No</th>
@@ -12,52 +12,29 @@
                  <th>Nama Jurnal</th>
                  <th>Tahun Terbit</th>
                  <th>ISSN</th>
-                 <th>Doi</th>
+                 <th>DOI</th>
                  <th>Jumlah Sitasi</th>
                  <th>Link</th>
                  <th>Kolaborasi Mhs</th>
                  <th>Kolaborasi Non UNIKOM</th>
-                 <th>Dosen Penulis 1</th>
-                 <th>H-Index</th>
-                 <th>i10 Index</th>
+                 <th>H index</th>
+                 <th>i10 index</th>
                  <th>Aksi</th>
              </tr>
          </thead>
+
          <tbody>
-             <?php foreach ($data['gscholar'] as $gscholar) :
-                    // Memecah string penulis menjadi array berdasarkan koma
-                    $authors = explode(',', $gscholar['authors']);
 
-                    // Mengambil tiga penulis pertama (Penulis 1, Penulis 2, Penulis 3)
-                    $penulis1 = isset($authors[0]) ? trim($authors[0]) : '';
-                    $penulis2 = isset($authors[1]) ? trim($authors[1]) : '';
-                    $penulis3 = isset($authors[2]) ? trim($authors[2]) : '';
 
-                    $cleanUrl = str_replace('"', '', $gscholar['url']);
-                ?>
-                 <tr class="text-xs">
-                     <td><?= $gscholar['id']; ?></td>
-                     <td><?= $gscholar['authors']; ?></td>
-                     <td><?= $gscholar['title']; ?></td>
-                     <td><?= $penulis1; ?></td>
-                     <td><?= $penulis2; ?></td>
-                     <td><?= $penulis3; ?></td>
-                     <td><?= $gscholar['journal_name']; ?></td>
-                     <td><?= $gscholar['publish_year']; ?></td>
-                     <td><?= $gscholar['issn']; ?></td>
-                     <td><?= $gscholar['doi']; ?></td>
-                     <td><?= $gscholar['citation']; ?></td>
-                     <td>
-                         <a href="<?= $cleanUrl; ?>" target="_blank"><?= $gscholar['url']; ?></a>
-                     </td>
-                     <td><?= $gscholar['kolaborasi_mhs']; ?></td>
-                     <td><?= $gscholar['koaborasi_non_unikom']; ?></td>
-                     <td><?= $penulis1; ?></td>
-                     <td><?= $gscholar['h_index']; ?></td>
-                     <td><?= $gscholar['i10_index']; ?></td>
-                     <td>
-                         <!-- Open the modal using ID.showModal() method -->
-                         <button class="btn" onclick="my_modal_5.showModal()">Edit</button>
+         </tbody>
+     </table>
+ </div>
+
+
+
+ <script>
+     var modal = `
+        <button class="btn" onclick="my_modal_5.showModal()">Edit</button>
                          <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
                              <div class="modal-box">
                                  <h3 class="font-bold text-lg">Hello!</h3>
@@ -69,70 +46,99 @@
                                      </form>
                                  </div>
                              </div>
-                         </dialog>
-                     </td>
-                 </tr>
-             <?php endforeach; ?>
-         </tbody>
-     </table>
- </div>
+                        </dialog>
+     `
 
 
- <script>
      $(document).ready(function() {
          $('#myTable').DataTable({
-             dom: 'Bfrtip',
-             buttons: [
-                 'copy', 'csv', 'excel', 'pdf', 'print'
+             //  dom: 'Bfrtip',
+             //  buttons: [
+             //      'copy', 'csv', 'excel', 'pdf', 'print'
+             //  ],
+             "processing": true,
+             "serverSide": true,
+             "pageLength": 10,
+             "lengthMenu": [10, 25, 50, 75, 100],
+             "ajax": {
+                 "url": "/gscholar/getDataTableGScholar",
+                 "type": "post",
+                 "datatype": "json"
+             },
+             columns: [{
+                     data: "id",
+                 },
+                 {
+                     data: "authors"
+                 },
+                 {
+                     data: "title",
+                 },
+                 {
+                     data: "authors",
+                     render: function(data, type, row) {
+                         var authors = data.split(', ');
+                         var firstAuthors = authors[0] ? authors[0] : '';
+                         return firstAuthors;
+                     }
+                 },
+                 {
+                     data: "authors",
+                     render: function(data, type, row) {
+                         var authors = data.split(', ');
+                         var secondAuthors = authors[1] ? authors[1] : '';
+                         return secondAuthors;
+                     }
+                 },
+                 {
+                     data: "authors",
+                     render: function(data, type, row) {
+                         var authors = data.split(', ');
+                         var thirdAuthors = authors[2] ? authors[2] : '';
+                         return thirdAuthors;
+                     }
+                 },
+                 {
+                     data: "journal_name",
+                 },
+                 {
+                     data: "publish_year",
+                 },
+                 {
+                     data: "issn",
+                 },
+                 {
+                     data: "doi",
+                 },
+                 {
+                     data: "citation",
+                 },
+                 {
+                     data: "url",
+                     render: function(data, type, row) {
+                         return "<a href='" + data + "' target='_blank'>" + data + "</a>";
+                     }
+                 },
+                 {
+                     data: "kolaborasi_mhs",
+                 },
+                 {
+                     data: "koaborasi_non_unikom"
+                 },
+                 {
+                     data: "h_index"
+                 },
+                 {
+                     data: "i10_index"
+                 },
+                 {
+                     "targets": -1,
+                     "data": null,
+                     "defaultContent": modal
+                 }
              ]
          });
-     })
-
-
-     //  $(document).ready(function() {
-     //      $('#myTable').DataTable({
-     //          "processing": true,
-     //          "serverSide": true,
-     //          "pageLength": 10,
-     //          "lengthMenu": [10, 25, 50, 75, 100],
-     //          "ajax": {
-     //              "url": "/home/getDataTable",
-     //              "type": "post",
-     //              "datatype": "json"
-     //          },
-     //          columns: [{
-     //                  data: "id",
-     //              },
-     //              {
-     //                  data: "id_sinta_author",
-     //              },
-     //              {
-     //                  data: "id_document_gscholar",
-     //              },
-     //              {
-     //                  data: "title",
-     //              },
-     //              {
-     //                  data: "abstract",
-     //              },
-     //              {
-     //                  data: "authors",
-     //              },
-     //              {
-     //                  data: "journal_name",
-     //              },
-     //              {
-     //                  data: "publish_year",
-     //              },
-     //              {
-     //                  data: "citation"
-     //              },
-     //              {
-     //                  data: "url"
-     //              }
-     //          ]
-     //      });
-     //  });
+     });
  </script>
 
  <!-- script tambahan  -->
