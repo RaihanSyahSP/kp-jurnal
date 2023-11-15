@@ -30,26 +30,34 @@
      </table>
  </div>
 
+ <!-- Modal for Editing Citation and DOI -->
+ <div id="editModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 z-50  justify-center items-center">
+      <div class="modal-container bg-white w-96 p-4 rounded-lg shadow-lg">
+             <div class="flex justify-end">
+                 <button id="closeModal" class="text-gray-600 hover:text-gray-800">&times;</button>
+             </div>
+             <h1 class="text-lg font-bold mb-4">Edit Data</h1>
+             <form id="editForm">
+                 <label for="issn">ISSN:</label>
+                 <input type="text" id="issn" name="issn" class="w-full mb-2 p-2 border rounded">
+                 
+                 <label for="doi">DOI:</label>
+                 <input type="text" id="doi" name="doi" class="w-full mb-2 p-2 border rounded">
+                 
+                 <label for="kolaborasi_mhs">Kolaborasi Mahasiswa:</label>
+                 <input type="text" id="kolaborasi_mhs" name="kolaborasi_mhs" class="w-full mb-2 p-2 border rounded">
+
+                 <label for="koaborasi_non_unikom">Kolaborasi Non Unikom:</label>
+                 <input type="text" id="koaborasi_non_unikom" name="koaborasi_non_unikom" class="w-full mb-2 p-2 border rounded">
+
+                 <button type="submit" class="bg-blue-500 text-white p-2 mt-6 rounded w-full">Edit</button>
+             </form>
+     </div>
+ </div>
+
 
 
  <script>
-     var modal = `
-        <button class="btn" onclick="my_modal_5.showModal()">Edit</button>
-                         <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-                             <div class="modal-box">
-                                 <h3 class="font-bold text-lg">Hello!</h3>
-                                 <p class="py-4">Press ESC key or click the button below to close</p>
-                                 <div class="modal-action">
-                                     <form method="dialog">
-                                         <!-- if there is a button in form, it will close the modal -->
-                                         <button class="btn">Close</button>
-                                     </form>
-                                 </div>
-                             </div>
-                        </dialog>
-     `
-
-
      $(document).ready(function() {
 
          // function for export all data excel with server side processing
@@ -95,16 +103,17 @@
              dt.ajax.reload();
          }
 
-         $('#myTable').DataTable({
+         // Declare table variable outside the DataTable initialization
+         var table;
+
+         table = $('#myTable').DataTable({
              "dom": 'Blfrtip',
-             "buttons": [
-                {
+             "buttons": [{
                  "extend": 'excel',
                  "text": '<button class="btn btn-outline absolute left-40">Download Excel</button>',
                  "titleAttr": 'Excel',
                  "action": newexportaction
-                },
-            ],
+             }, ],
              "processing": true,
              "serverSide": true,
              "pageLength": 10,
@@ -183,10 +192,69 @@
                  {
                      "targets": -1,
                      "data": null,
-                     "defaultContent": modal
+                     "render": function(data, type, row) {
+                         return '<button class="btn edit-btn btn-success text-white">Edit</button>';
+                     }
                  }
              ]
          });
+
+         // Add an event listener for the "Edit" button
+         $('#myTable tbody').on('click', 'button.edit-btn', function() {
+             console.log('test');
+             var data = table.row($(this).parents('tr')).data();
+             console.log(data);
+             openEditModal(data.id, data.citation, data.doi);
+         });
+
+         // Function to open the edit modal
+         function openEditModal(id, citation, doi) {
+             // Set values in the modal form
+             $('#citation').val(citation);
+             $('#doi').val(doi);
+
+             // Show the modal
+             $('#editModal').removeClass('hidden');
+             $('#editModal').addClass('flex');
+
+             // Add a submit event listener to the form
+             $('#editForm').submit(function(event) {
+                 event.preventDefault();
+
+                 // Retrieve edited values
+                 var editedCitation = $('#citation').val();
+                 var editedDOI = $('#doi').val();
+
+                 // Perform AJAX request to update the data in the server
+                 //  $.ajax({
+                 //      url: '/gscholar/updateCitationAndDOI', // Replace with your server endpoint
+                 //      method: 'POST',
+                 //      data: {
+                 //          id: id,
+                 //          citation: editedCitation,
+                 //          doi: editedDOI
+                 //      },
+                 //      success: function(response) {
+                 //          // Handle success (e.g., close modal, refresh DataTable, etc.)
+                 //          console.log('Data updated successfully:', response);
+                 //          $('#editModal').addClass('hidden');
+                 //          table.ajax.reload();
+                 //      },
+                 //      error: function(error) {
+                 //          // Handle error
+                 //          console.error('Error updating data:', error);
+                 //      }
+                 //  });
+             });
+         }
+
+         // Close the modal when the close button is clicked
+         $('#closeModal').click(function() {
+             $('#editModal').addClass('hidden');
+             // Remove the submit event listener to prevent duplicate submissions
+             $('#editForm').off('submit');
+         });
+
      });
  </script>
 
