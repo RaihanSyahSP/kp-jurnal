@@ -32,26 +32,26 @@
 
  <!-- Modal for Editing Citation and DOI -->
  <div id="editModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 z-50  justify-center items-center">
-      <div class="modal-container bg-white w-96 p-4 rounded-lg shadow-lg">
-             <div class="flex justify-end">
-                 <button id="closeModal" class="text-gray-600 hover:text-gray-800">&times;</button>
-             </div>
-             <h1 class="text-lg font-bold mb-4">Edit Data</h1>
-             <form id="editForm">
-                 <label for="issn">ISSN:</label>
-                 <input type="text" id="issn" name="issn" class="w-full mb-2 p-2 border rounded">
-                 
-                 <label for="doi">DOI:</label>
-                 <input type="text" id="doi" name="doi" class="w-full mb-2 p-2 border rounded">
-                 
-                 <label for="kolaborasi_mhs">Kolaborasi Mahasiswa:</label>
-                 <input type="text" id="kolaborasi_mhs" name="kolaborasi_mhs" class="w-full mb-2 p-2 border rounded">
+     <div class="modal-container bg-white w-96 p-4 rounded-lg shadow-lg">
+         <div class="flex justify-end">
+             <button id="closeModal" class="text-gray-600 hover:text-gray-800">&times;</button>
+         </div>
+         <h1 class="text-lg font-bold mb-4">Edit Data</h1>
+         <form id="editForm">
+             <label for="issn">ISSN:</label>
+             <input type="text" id="issn" name="issn" class="w-full mb-2 p-2 border rounded">
 
-                 <label for="koaborasi_non_unikom">Kolaborasi Non Unikom:</label>
-                 <input type="text" id="koaborasi_non_unikom" name="koaborasi_non_unikom" class="w-full mb-2 p-2 border rounded">
+             <label for="doi">DOI:</label>
+             <input type="text" id="doi" name="doi" class="w-full mb-2 p-2 border rounded">
 
-                 <button type="submit" class="bg-blue-500 text-white p-2 mt-6 rounded w-full">Edit</button>
-             </form>
+             <label for="kolaborasi_mhs">Kolaborasi Mahasiswa:</label>
+             <input type="text" id="kolaborasi_mhs" name="kolaborasi_mhs" class="w-full mb-2 p-2 border rounded">
+
+             <label for="koaborasi_non_unikom">Kolaborasi Non Unikom:</label>
+             <input type="text" id="koaborasi_non_unikom" name="koaborasi_non_unikom" class="w-full mb-2 p-2 border rounded">
+
+             <button type="submit" class="bg-blue-500 text-white p-2 mt-6 rounded w-full">Edit</button>
+         </form>
      </div>
  </div>
 
@@ -70,23 +70,11 @@
                  data.length = 2147483647;
                  dt.one('preDraw', function(e, settings) {
                      // Call the original action function
-                     if (button[0].className.indexOf('buttons-copy') >= 0) {
-                         $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
-                     } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    if (button[0].className.indexOf('buttons-excel') >= 0) {
                          $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
                              $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
                              $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-                     } else if (button[0].className.indexOf('buttons-csv') >= 0) {
-                         $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
-                             $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
-                             $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
-                     } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
-                         $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
-                             $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
-                             $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
-                     } else if (button[0].className.indexOf('buttons-print') >= 0) {
-                         $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-                     }
+                     } 
                      dt.one('preXhr', function(e, s, data) {
                          // DataTables thinks the first item displayed is index 0, but we're not drawing that.
                          // Set the property to what it was before exporting.
@@ -204,14 +192,16 @@
              console.log('test');
              var data = table.row($(this).parents('tr')).data();
              console.log(data);
-             openEditModal(data.id, data.citation, data.doi);
+             openEditModal(data.id, data.issn, data.doi, data.kolaborasi_mhs, data.koaborasi_non_unikom);
          });
 
          // Function to open the edit modal
-         function openEditModal(id, citation, doi) {
+         function openEditModal(id, issn, doi, kolaborasi_mhs, koaborasi_non_unikom) {
              // Set values in the modal form
-             $('#citation').val(citation);
+             $('#issn').val(issn);
              $('#doi').val(doi);
+             $('#kolaborasi_mhs').val(kolaborasi_mhs);
+             $('#koaborasi_non_unikom').val(koaborasi_non_unikom);
 
              // Show the modal
              $('#editModal').removeClass('hidden');
@@ -222,29 +212,43 @@
                  event.preventDefault();
 
                  // Retrieve edited values
-                 var editedCitation = $('#citation').val();
+                 var editedIssn = $('#issn').val();
                  var editedDOI = $('#doi').val();
+                 var editedKolaborasiMhs = $('#kolaborasi_mhs').val();
+                 var editedKolaborasiNonUnikom = $('#koaborasi_non_unikom').val();
 
-                 // Perform AJAX request to update the data in the server
-                 //  $.ajax({
-                 //      url: '/gscholar/updateCitationAndDOI', // Replace with your server endpoint
-                 //      method: 'POST',
-                 //      data: {
-                 //          id: id,
-                 //          citation: editedCitation,
-                 //          doi: editedDOI
-                 //      },
-                 //      success: function(response) {
-                 //          // Handle success (e.g., close modal, refresh DataTable, etc.)
-                 //          console.log('Data updated successfully:', response);
-                 //          $('#editModal').addClass('hidden');
-                 //          table.ajax.reload();
-                 //      },
-                 //      error: function(error) {
-                 //          // Handle error
-                 //          console.error('Error updating data:', error);
-                 //      }
-                 //  });
+                 //  Perform AJAX request to update the data in the server
+                 $.ajax({
+                     url: '/gscholar/getEditGscholarInfo', // Replace with your server endpoint
+                     method: 'POST',
+                     data: {
+                         id: id,
+                         issn: editedIssn,
+                         doi: editedDOI,
+                         kolaborasi_mhs: editedKolaborasiMhs,
+                         koaborasi_non_unikom: editedKolaborasiNonUnikom
+                     },
+                     success: function(response) {
+
+                         Swal.fire({
+                             icon: "success",
+                             title: "Berhasil...",
+                             text: "Berhasil Mengedit Data",
+                         });
+
+                         $('#editModal').addClass('hidden');
+                         table.ajax.reload();
+                     },
+                     error: function(error) {
+                         // Handle error
+                         Swal.fire({
+                             icon: "error",
+                             title: "Gagal...",
+                             text: "Gagal Mengedit Data",
+                         });
+                         console.error('Error updating data:', error);
+                     }
+                 });
              });
          }
 

@@ -94,6 +94,25 @@ class GScholar_model {
         );
     }
 
+    public function editGscholarInfo($id, $issn, $doi, $kolaborasi_mhs, $koaborasi_non_unikom) {
+        $query = "UPDATE " . $this->tableGScholar_info .
+            " SET " . $this->tableGScholar_info . ".issn = :issn, " .
+            $this->tableGScholar_info . ".doi = :doi, " .
+            $this->tableGScholar_info . ".kolaborasi_mhs = :kolaborasi_mhs, " .
+            $this->tableGScholar_info . ".koaborasi_non_unikom = :koaborasi_non_unikom " .
+            " WHERE " . $this->tableGScholar_info . ".id_t_gscholar = :id_t_gscholar";
+
+
+        $this->db->query($query);
+        $this->db->bind('id_t_gscholar', $id);
+        $this->db->bind('issn', $issn);
+        $this->db->bind('doi', $doi);
+        $this->db->bind('kolaborasi_mhs', $kolaborasi_mhs);
+        $this->db->bind('koaborasi_non_unikom', $koaborasi_non_unikom);
+
+        return $this->db->execute();
+    }
+
 
     // public function getMahasiswaById($id)
     // {

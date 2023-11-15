@@ -11,6 +11,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </head>
@@ -39,14 +40,14 @@
           </ul>
         </div>
       </div>
-     
+
       <!-- Content -->
     </div>
     <div class="drawer-side">
       <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
       <ul class="menu p-4 w-80 min-h-full bg-base-200">
         <!-- Sidebar content here -->
-        <li><a href="<?= BASEURL; ?>">Google Schoolar</a></li>
+        <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
         <li><a href="<?= BASEURL; ?>/menu">Menu</a></li>
         <li><a href="<?= BASEURL; ?>/about">About</a></li>
       </ul>
