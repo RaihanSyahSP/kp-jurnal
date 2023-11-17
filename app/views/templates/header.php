@@ -12,12 +12,31 @@
   <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- DataTables Responsive CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" />
+  <!-- DataTables Responsive JS -->
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
+  <style>
+    .dt-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      padding-left: 20px;
+
+      @media screen and (max-width: 640px) {
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 10px;
+      }
+
+    }
+  </style>
 
 </head>
 
 <body class="h-screen">
-  <div class="drawer">
+  <div class="drawer z-10">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->

@@ -1,8 +1,8 @@
  <!-- Page content here -->
  <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
-     <table id="myTable" class="display overflow-scroll w-full">
+     <table id="myTable" class="display" style="width: 100%;">
          <thead>
-             <tr class="text-xs">
+             <tr class="text-xl md:text-base">
                  <th>No</th>
                  <th>Nama Dosen</th>
                  <th>Judul</th>
@@ -59,7 +59,6 @@
 
  <script>
      $(document).ready(function() {
-
          // function for export all data excel with server side processing
          function newexportaction(e, dt, button, config) {
              var self = this;
@@ -111,10 +110,29 @@
          var table;
 
          table = $('#myTable').DataTable({
-             "dom": 'Blfrtip',
+             "dom": 'lfBrtip',
+             "responsive": {
+                 details: {
+                     renderer: function(api, rowIdx, columns) {
+                         var data = $.map(columns, function(col, i) {
+                             return col.hidden ?
+                                 '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
+                                 '<td>' + col.title + ':' + '</td> ' +
+                                 '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
+                                 '</tr>' :
+                                 '';
+                         }).join('');
+
+                         return data ?
+                             $('<table/>').append(data) :
+                             false;
+                     }
+                 }
+             },
+             "fixedHeader": true,
              "buttons": [{
                  "extend": 'excel',
-                 "text": '<button class="btn btn-outline absolute left-40">Download Excel</button>',
+                 "text": '<button class="btn btn-outline">Download Excel</button>',
                  "titleAttr": 'Excel',
                  "action": newexportaction
              }, ],
@@ -129,12 +147,15 @@
              },
              columns: [{
                      data: "id",
+                     class: 'responsive'
                  },
                  {
-                     data: "authors"
+                     data: "authors",
+                     class: 'responsive'
                  },
                  {
                      data: "title",
+                     class: 'responsive'
                  },
                  {
                      data: "authors",
@@ -142,7 +163,8 @@
                          var authors = data.split(', ');
                          var firstAuthors = authors[0] ? authors[0] : '';
                          return firstAuthors;
-                     }
+                     },
+                     class: 'responsive'
                  },
                  {
                      data: "authors",
@@ -150,7 +172,8 @@
                          var authors = data.split(', ');
                          var secondAuthors = authors[1] ? authors[1] : '';
                          return secondAuthors;
-                     }
+                     },
+                     class: 'responsive'
                  },
                  {
                      data: "authors",
@@ -158,52 +181,64 @@
                          var authors = data.split(', ');
                          var thirdAuthors = authors[2] ? authors[2] : '';
                          return thirdAuthors;
-                     }
+                     },
+                     class: 'responsive'
                  },
                  {
                      data: "journal_name",
+                     class: 'responsive'
                  },
                  {
                      data: "publish_year",
+                     class: 'responsive'
                  },
                  {
                      data: "issn",
+                     class: 'responsive'
                  },
                  {
                      data: "doi",
+                     class: 'responsive'
                  },
                  {
                      data: "citation",
+                     class: 'responsive'
                  },
                  {
                      data: "url",
                      render: function(data, type, row) {
                          return "<a href='" + data + "' target='_blank'>" + data + "</a>";
-                     }
+                     },
+                     class: 'responsive'
                  },
                  {
                      data: "kolaborasi_mhs",
+                     class: 'responsive'
                  },
                  {
-                     data: "koaborasi_non_unikom"
+                     data: "koaborasi_non_unikom",
+                     class: 'responsive'
                  },
                  {
-                     data: "h_index"
+                     data: "h_index",
+                     class: 'responsive'
                  },
                  {
-                     data: "i10_index"
+                     data: "i10_index",
+                     class: 'responsive'
                  },
                  {
                      "targets": -1,
                      "data": null,
                      "render": function(data, type, row) {
                          return '<button class="btn edit-btn btn-success text-white">Edit</button>';
-                     }
+                     },
+                     class: 'responsive'
                  }
              ]
          });
 
-         // Add an event listener for the "Edit" button
+         //  // Add an event listener for the "Edit" button
          $('#myTable tbody').on('click', 'button.edit-btn', function() {
              console.log('test');
              var data = table.row($(this).parents('tr')).data();
