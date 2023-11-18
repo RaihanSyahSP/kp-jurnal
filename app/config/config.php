@@ -1,6 +1,6 @@
 <?php 
 
-define('BASEURL', 'http://kp-angga.test');
+define('BASEURL', 'https://jpi.unikom.ac.id');
 
 // DB
 define('DB_HOST', 'localhost');
