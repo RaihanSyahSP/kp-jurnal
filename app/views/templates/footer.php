@@ -3,7 +3,6 @@
         <p>Copyright © 2023 - UNIKOM</p>
     </div>
 </footer>
-<script src="https://cdn.tailwindcss.com"></script>
 
 </body>
 
