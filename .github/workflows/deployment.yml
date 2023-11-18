@@ -1,0 +1,35 @@
+# CI Name
+name: 'Deployment'
+
+# Only running when
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        # Running on latest version of Ubuntu
+        runs-on: ubuntu-latest
+
+        steps:
+            # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+
+    deploy:
+        needs: build
+
+        # Running on latest version of Ubuntu
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Deploying to VPS
+              uses: appleboy/ssh-action@v0.1.4
+              with:
+                  host: ${{ secrets.VPS_HOSTNAME }}
+                  username: ${{ secrets.VPS_USERNAME }}
+                  password: ${{ secrets.VPS_PASSWORD }}
+                  port: ${{ secrets.VPS_PORT }}
+                  script: cd /var/www/kp-jurnal/; git pull;
