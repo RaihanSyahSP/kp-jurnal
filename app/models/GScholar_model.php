@@ -1,6 +1,6 @@
 <?php 
 
-class GScholar_model {
+class Gscholar_model {
     private $tableGScholar_doc = 'gscholar_documents';
     private $tableGScholar_info = 'gscholar_info';
     private $tableGScholar_summary = 'gscholar_summary';
