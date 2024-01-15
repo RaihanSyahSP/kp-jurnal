@@ -32,4 +32,4 @@ jobs:
                   username: ${{ secrets.VPS_USERNAME }}
                   password: ${{ secrets.VPS_PASSWORD }}
                   port: ${{ secrets.VPS_PORT }}
-                  script: cd /home/administrator/kp-jurnal; git pull origin main;
+                  script: cd /usr/share/nginx/www/kp-jurnal; git pull origin main;
