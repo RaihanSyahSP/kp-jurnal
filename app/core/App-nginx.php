@@ -14,12 +14,7 @@ class App
             if (file_exists($controllerFileName)) {
                 $this->controller = ucfirst($url[0]);
                 unset($url[0]);
-            } else {
-                // Jika file controller tidak ditemukan, tampilkan halaman 404 atau pesan lainnya.
-                http_response_code(404);
-                echo 'Page not found';
-                exit;
-            }
+            } 
         }
 
         require_once '../app/controllers/' . $this->controller . '.php';
@@ -30,12 +25,7 @@ class App
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
                 unset($url[1]);
-            } else {
-                // Jika method tidak ditemukan, tampilkan halaman 404 atau pesan lainnya.
-                http_response_code(404);
-                echo 'Page not found';
-                exit;
-            }
+            } 
         }
 
         // params
