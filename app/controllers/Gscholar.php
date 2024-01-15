@@ -13,7 +13,7 @@ class Scholar extends Controller {
 
     public function getDataTableGScholar() {
         $params = $_REQUEST;
-        $res = $this->model('GScholar_model')->getAllScholarDoc();
+        $res = $this->model('Gscholar_model')->getAllScholarDoc();
         echo json_encode($res);
     }
 
@@ -24,7 +24,7 @@ class Scholar extends Controller {
         $kolaborasi_mhs = $_POST['kolaborasi_mhs'];
         $koaborasi_non_unikom = $_POST['koaborasi_non_unikom'];
 
-        $res = $this->model('GScholar_model')->editGscholarInfo($id, $issn, $doi, $kolaborasi_mhs, $koaborasi_non_unikom);
+        $res = $this->model('Gscholar_model')->editGscholarInfo($id, $issn, $doi, $kolaborasi_mhs, $koaborasi_non_unikom);
         echo json_encode($res);
     }
 }
