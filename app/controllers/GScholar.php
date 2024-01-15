@@ -1,6 +1,6 @@
 <?php 
 
-class GScholar extends Controller {
+class Gscholar extends Controller {
     public function index()
     {
         $data['judul'] = 'Google Scholar';        
