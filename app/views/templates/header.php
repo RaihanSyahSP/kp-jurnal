@@ -47,7 +47,7 @@
 
 </head>
 
-<body class="h-screen">
+<body class="flex flex-col min-h-screen">
   <div class="drawer z-10">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
