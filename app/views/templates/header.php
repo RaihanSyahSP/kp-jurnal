@@ -4,27 +4,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Halaman <?= $data['judul']; ?></title>
-  
+
   <!-- tailwindcss -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="<?= BASEURL; ?>/tailwind/output.css">
   <link rel="stylesheet" href="<?= BASEURL; ?>/tailwind/input.css">
-  
+
   <!-- daisy ui -->
   <link href="https://cdn.jsdelivr.net/npm/daisyui@3.6.2/dist/full.css" rel="stylesheet" type="text/css" />
-  
+
   <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
- 
- <!-- datatable -->
+
+  <!-- datatable -->
   <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-  
+
   <!-- sweetalert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
   <!-- DataTables Responsive CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" />
-  
+
   <!-- DataTables Responsive JS -->
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 

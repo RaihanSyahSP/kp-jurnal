@@ -1,9 +1,9 @@
-<?php 
+<?php
 
-define('BASEURL', 'https://jpi.unikom.ac.id');
-
-// DB
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'sinta');
+if ($_SERVER['SERVER_NAME'] === 'kp-angga.test') {
+    // Lingkungan lokal
+    require_once 'config.local.php';
+} else {
+    // Lingkungan produksi
+    require_once 'config.production.php';
+}
