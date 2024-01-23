@@ -1,3 +1,12 @@
+<?php
+  if (!isset($_SESSION['username'])) {
+  header('Location: /');
+  exit();
+  }
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
@@ -64,10 +73,11 @@
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal font-semibold">
             <!-- Navbar menu content here -->
-            <li><a href="<?= BASEURL; ?>">Dashboard</a></li>
+            <li><a href="<?= BASEURL; ?>/dashboard">Dashboard</a></li>
             <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
             <li><a href="<?= BASEURL; ?>/menu">Menu</a></li>
             <li><a href="<?= BASEURL; ?>/about">About</a></li>
+            <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -78,9 +88,11 @@
       <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
       <ul class="menu p-4 w-80 min-h-full bg-base-200">
         <!-- Sidebar content here -->
+        <li><a href="<?= BASEURL; ?>/dashboard">Dashboard</a></li>
         <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
         <li><a href="<?= BASEURL; ?>/menu">Menu</a></li>
         <li><a href="<?= BASEURL; ?>/about">About</a></li>
+        <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
       </ul>
     </div>
   </div>
