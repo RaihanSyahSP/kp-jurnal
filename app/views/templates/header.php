@@ -77,7 +77,7 @@ if (!isset($_SESSION['username'])) {
             <!-- Navbar menu content here -->
             <li><a href="<?= BASEURL; ?>/dashboard">Dashboard</a></li>
             <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
-            <li><a href="<?= BASEURL; ?>/menu">Menu</a></li>
+            <li><a href="<?= BASEURL; ?>/wos">Web of Science</a></li>
             <li><a href="<?= BASEURL; ?>/about">About</a></li>
             <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
           </ul>
@@ -92,7 +92,7 @@ if (!isset($_SESSION['username'])) {
         <!-- Sidebar content here -->
         <li><a href="<?= BASEURL; ?>/dashboard">Dashboard</a></li>
         <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
-        <li><a href="<?= BASEURL; ?>/menu">Menu</a></li>
+        <li><a href="<?= BASEURL; ?>/wos">Web of Science</a></li>
         <li><a href="<?= BASEURL; ?>/about">About</a></li>
         <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
       </ul>
