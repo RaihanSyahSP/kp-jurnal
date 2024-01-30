@@ -9,4 +9,11 @@ class Wos extends Controller {
         $this->view('templates/footer');
     }
 
+    public function getDataTableWos()
+    {
+        $params = $_REQUEST;
+        $res = $this->model('Wos_model')->getAllWosDoc();
+        echo json_encode($res);
+    }
+
 }
