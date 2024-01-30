@@ -63,7 +63,7 @@ if (!isset($_SESSION['username'])) {
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->
-      <div class="w-full navbar bg-base-300">
+      <div class="p-5 w-full navbar bg-base-300 lg:p-2">
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">
@@ -71,14 +71,14 @@ if (!isset($_SESSION['username'])) {
             </svg>
           </label>
         </div>
-        <div class="flex-1 px-2 mx-2 font-bold text-xl">Jurnal UNIKOM</div>
+        <div class="text-2xl flex-1 px-2 mx-2 font-bold lg:text-xl">Jurnal UNIKOM</div>
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal font-semibold">
             <!-- Navbar menu content here -->
             <li><a href="<?= BASEURL; ?>/dashboard">Dashboard</a></li>
             <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
             <li><a href="<?= BASEURL; ?>/wos">Web of Science</a></li>
-            <li><a href="<?= BASEURL; ?>/about">About</a></li>
+            <li><a href="<?= BASEURL; ?>/scopus">Scopus</a></li>
             <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
           </ul>
         </div>
@@ -93,7 +93,7 @@ if (!isset($_SESSION['username'])) {
         <li><a href="<?= BASEURL; ?>/dashboard">Dashboard</a></li>
         <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
         <li><a href="<?= BASEURL; ?>/wos">Web of Science</a></li>
-        <li><a href="<?= BASEURL; ?>/about">About</a></li>
+        <li><a href="<?= BASEURL; ?>/scopus">Scopus</a></li>
         <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
       </ul>
     </div>
