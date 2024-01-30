@@ -2,3 +2,4 @@
 /node_modules
 /app/config/config.php
 /app/config/config.production.php
+/vendor
