@@ -1,8 +1,8 @@
 <?php
-  if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
   header('Location: /');
   exit();
-  }
+}
 ?>
 
 
@@ -13,6 +13,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Halaman <?= $data['judul']; ?></title>
+
+  <link rel="icon" type="image/x-icon" href="<?= BASEURL; ?>/img/logo_unikom_kuning.png">
 
   <!-- tailwindcss -->
   <script src="https://cdn.tailwindcss.com"></script>
