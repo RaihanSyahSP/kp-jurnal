@@ -4,22 +4,19 @@
          <thead>
              <tr class="text-xl md:text-base">
                  <th>No</th>
-                 <th>Nama Dosen</th>
                  <th>Judul</th>
-                 <th>Penulis 1</th>
-                 <th>Penulis 2</th>
-                 <th>Penulis 3</th>
                  <th>Nama Jurnal</th>
+                 <th>Penulis Pertama</th>
+                 <th>Penulis Akhir</th>
+                 <th>Penulis</th>
+                 <th>Tanggal Terbit</th>
+                 <th>Sitasi</th>
+                 <th>Tipe Terbit</th>
                  <th>Tahun Terbit</th>
                  <th>ISSN</th>
+                 <th>EISSN</th>
                  <th>DOI</th>
-                 <th>Jumlah Sitasi</th>
-                 <th>Link</th>
-                 <th>Kolaborasi Mhs</th>
-                 <th>Kolaborasi Non UNIKOM</th>
-                 <th>H index</th>
-                 <th>i10 index</th>
-                 <th>Aksi</th>
+                 <th>Url</th>
              </tr>
          </thead>
 
@@ -30,31 +27,15 @@
      </table>
  </div>
 
- <!-- Modal for Editing Citation and DOI -->
- <div id="editModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 z-50  justify-center items-center">
+ <div id="showAbstract" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 z-50 justify-center items-center">
      <div class="modal-container bg-white w-96 p-4 rounded-lg shadow-lg">
          <div class="flex justify-end">
              <button id="closeModal" class="text-gray-600 hover:text-gray-800">&times;</button>
          </div>
-         <h1 class="text-lg font-bold mb-4">Edit Data</h1>
-         <form id="editForm">
-             <label for="issn">ISSN:</label>
-             <input type="text" id="issn" name="issn" class="w-full mb-2 p-2 border rounded">
-
-             <label for="doi">DOI:</label>
-             <input type="text" id="doi" name="doi" class="w-full mb-2 p-2 border rounded">
-
-             <label for="kolaborasi_mhs">Kolaborasi Mahasiswa:</label>
-             <input type="text" id="kolaborasi_mhs" name="kolaborasi_mhs" class="w-full mb-2 p-2 border rounded">
-
-             <label for="koaborasi_non_unikom">Kolaborasi Non Unikom:</label>
-             <input type="text" id="koaborasi_non_unikom" name="koaborasi_non_unikom" class="w-full mb-2 p-2 border rounded">
-
-             <button type="submit" class="bg-blue-500 text-white p-2 mt-6 rounded w-full">Edit</button>
-         </form>
+         <h1 class="text-lg font-bold mb-4">Abstract</h1>
+         <p id="abstractContent"></p>
      </div>
  </div>
-
 
 
  <script>
@@ -141,7 +122,7 @@
              "pageLength": 10,
              "lengthMenu": [10, 25, 50, 75, 100],
              "ajax": {
-                 "url": "/gscholar/getDataTableGScholar",
+                 "url": "/wos/getDataTableWos",
                  "type": "post",
                  "datatype": "json"
              },
@@ -150,42 +131,54 @@
                      class: 'responsive'
                  },
                  {
-                     data: "authors",
-                     class: 'responsive'
-                 },
-                 {
                      data: "title",
                      class: 'responsive'
                  },
                  {
-                     data: "authors",
-                     render: function(data, type, row) {
-                         var authors = data.split(', ');
-                         var firstAuthors = authors[0] ? authors[0] : '';
-                         return firstAuthors;
-                     },
-                     class: 'responsive'
-                 },
-                 {
-                     data: "authors",
-                     render: function(data, type, row) {
-                         var authors = data.split(', ');
-                         var secondAuthors = authors[1] ? authors[1] : '';
-                         return secondAuthors;
-                     },
-                     class: 'responsive'
-                 },
-                 {
-                     data: "authors",
-                     render: function(data, type, row) {
-                         var authors = data.split(', ');
-                         var thirdAuthors = authors[2] ? authors[2] : '';
-                         return thirdAuthors;
-                     },
-                     class: 'responsive'
-                 },
-                 {
                      data: "journal_name",
+                     class: 'responsive'
+                 },
+                 {
+                     data: "authors",
+                     render: function(data, type, row) {
+                         var authors = data.split('; ');
+                         var firstAuthor = authors[0] ? authors[0] : '';
+                         return firstAuthor;
+                     },
+                     class: 'responsive'
+                 },
+                 {
+                     data: "authors",
+                     render: function(data, type, row) {
+                         var authors = data.split('; ');
+                         var lastAuthor = authors.length > 0 ? authors[authors.length - 1] : ''
+                         return lastAuthor;
+                     },
+                     class: 'responsive'
+                 },
+                 {
+                     data: "authors",
+                     class: 'responsive'
+                 },
+                 {
+                     data: "publish_date",
+                     class: 'responsive'
+                 },
+                 {
+                     data: "citation",
+                     class: 'responsive'
+                 },
+                 //  {
+                 //      data: "abstract",
+                 //      class: 'responsive',
+                 //      //  render: DataTable.render.ellipsis(10)
+                 //      render: function(data, type, row) {
+                 //          // Tautan untuk membuka modal atau popover
+                 //          return '<button class="btn btn-show" data-bs-toggle="modal" data-bs-target="#showAbstract" data-abstract="' + data + '">Lihat Abstract</button>';
+                 //      }
+                 //  },
+                 {
+                     data: "publish_type",
                      class: 'responsive'
                  },
                  {
@@ -197,11 +190,11 @@
                      class: 'responsive'
                  },
                  {
-                     data: "doi",
+                     data: "eissn",
                      class: 'responsive'
                  },
                  {
-                     data: "citation",
+                     data: "doi",
                      class: 'responsive'
                  },
                  {
@@ -211,106 +204,24 @@
                      },
                      class: 'responsive'
                  },
-                 {
-                     data: "kolaborasi_mhs",
-                     class: 'responsive'
-                 },
-                 {
-                     data: "koaborasi_non_unikom",
-                     class: 'responsive'
-                 },
-                 {
-                     data: "h_index",
-                     class: 'responsive'
-                 },
-                 {
-                     data: "i10_index",
-                     class: 'responsive'
-                 },
-                 {
-                     "targets": -1,
-                     "data": null,
-                     "render": function(data, type, row) {
-                         return '<button class="btn edit-btn btn-success text-white">Edit</button>';
-                     },
-                     class: 'responsive'
-                 }
              ]
          });
 
-         //  // Add an event listener for the "Edit" button
-         $('#myTable tbody').on('click', 'button.edit-btn', function() {
-             console.log('test');
-             var data = table.row($(this).parents('tr')).data();
-             console.log(data);
-             openEditModal(data.id, data.issn, data.doi, data.kolaborasi_mhs, data.koaborasi_non_unikom);
+
+         $('#myTable tbody').on('click', "button.btn-show", function() {
+             // Ambil isi abstract dari tombol yang diklik
+             var abstractContent = $(this).data('abstract');
+             console.log(abstractContent);
+             // Tetapkan isi abstract ke dalam modal
+             $('#abstractContent').text(abstractContent);
+
+             // Tampilkan modal
+             $('#showAbstract').removeClass('hidden');
          });
 
-         // Function to open the edit modal
-         function openEditModal(id, issn, doi, kolaborasi_mhs, koaborasi_non_unikom) {
-             // Set values in the modal form
-             $('#issn').val(issn);
-             $('#doi').val(doi);
-             $('#kolaborasi_mhs').val(kolaborasi_mhs);
-             $('#koaborasi_non_unikom').val(koaborasi_non_unikom);
-
-             // Show the modal
-             $('#editModal').removeClass('hidden');
-             $('#editModal').addClass('flex');
-
-             // Add a submit event listener to the form
-             $('#editForm').submit(function(event) {
-                 event.preventDefault();
-
-                 // Retrieve edited values
-                 var editedIssn = $('#issn').val();
-                 var editedDOI = $('#doi').val();
-                 var editedKolaborasiMhs = $('#kolaborasi_mhs').val();
-                 var editedKolaborasiNonUnikom = $('#koaborasi_non_unikom').val();
-
-                 //  Perform AJAX request to update the data in the server
-                 $.ajax({
-                     url: '/gscholar/getEditGscholarInfo', // Replace with your server endpoint
-                     method: 'POST',
-                     data: {
-                         id: id,
-                         issn: editedIssn,
-                         doi: editedDOI,
-                         kolaborasi_mhs: editedKolaborasiMhs,
-                         koaborasi_non_unikom: editedKolaborasiNonUnikom
-                     },
-                     success: function(response) {
-
-                         Swal.fire({
-                             icon: "success",
-                             title: "Berhasil...",
-                             text: "Berhasil Mengedit Data",
-                         });
-
-                         $('#editModal').addClass('hidden');
-                         table.ajax.reload();
-                     },
-                     error: function(error) {
-                         // Handle error
-                         Swal.fire({
-                             icon: "error",
-                             title: "Gagal...",
-                             text: "Gagal Mengedit Data",
-                         });
-                         console.error('Error updating data:', error);
-                     }
-                 });
-             });
-         }
-
-         // Close the modal when the close button is clicked
-         $('#closeModal').click(function() {
-             $('#editModal').addClass('hidden');
-             // Remove the submit event listener to prevent duplicate submissions
-             $('#editForm').off('submit');
+         $('#closeModal').on('click', function() {
+             $('#showAbstract').addClass('hidden');
          });
 
      });
  </script>
-
- 
