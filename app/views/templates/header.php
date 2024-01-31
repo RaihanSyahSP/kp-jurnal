@@ -11,7 +11,7 @@ if (!isset($_SESSION['username'])) {
 <html lang="en" data-theme="light">
 
 <head>
-  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>Halaman <?= $data['judul']; ?></title>
 
   <link rel="icon" type="image/x-icon" href="<?= BASEURL; ?>/img/logo_unikom_kuning.png">
@@ -63,7 +63,7 @@ if (!isset($_SESSION['username'])) {
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
       <!-- Navbar -->
-      <div class="p-5 w-full navbar bg-base-300 lg:p-2">
+      <div class="p-3 w-full navbar bg-base-300 lg:p-2">
         <div class="flex-none lg:hidden">
           <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">
