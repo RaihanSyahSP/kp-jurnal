@@ -83,7 +83,7 @@
                         <button class="btn btn-ghost" onclick="my_modal_3.showModal()">Detail</button>
                     </div>
                 </div>
-                <h1 id=" totalInternationalJournal" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
+                <h1 id="totalInternationalJournal" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
                 <div class="flex flex-row justify-between group-hover:text-gray-200">
                     <p>Jumlah Publikasi Internasional</p>
                     <span>
@@ -99,7 +99,7 @@
 
 
 <!-- modal jumlah sitasi per dosen -->
-<dialog id="my_modal_2" class="modal">
+<dialog id="my_modal_2" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box">
         <h3 class="font-bold text-lg">Detail Jumlah Data Sitasi Google Scholar</h3>
         <!-- datatable -->
@@ -189,9 +189,9 @@
 </dialog>
 
 <!-- modal jumlah jurnal internasional dosen -->
-<dialog id="my_modal_3" class="modal">
+<dialog id="my_modal_3" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box">
-        <h3 class="font-bold text-lg">Detail Jumlah Publikasi Internasional</h3>
+        <h3 class="font-bold text-lg">Detail Jumlah Publikasi Internasional (Wos & Scopus)</h3>
         <!-- datatable -->
         <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
             <table id="tabelPublikasiInter" class="display" style="width: 100%;">
@@ -278,9 +278,9 @@
 <script>
     $(document).ready(function() {
         const loadingSpinnerClass = 'loading loading-spinner loading-lg'
-        $('#totalCitationCount').addClass(loadingSpinnerClass);
-
+        
         // Ajax call to get total citation count
+        $('#totalCitationCount').addClass(loadingSpinnerClass);
         $.ajax({
             url: 'dashboard/getTotalCitedCountGscholar',
             method: 'GET',
@@ -297,20 +297,20 @@
         });
 
         // Ajax call to get total international journal count
-        // $('#totalInternationalJournal').addClass(loadingSpinnerClass);
-        // $.ajax({
-        //     url: 'dashboard/getTotalInternationalJournal',
-        //     method: 'GET',
-        //     dataType: 'json',
-        //     success: function(response) {
-        //         // Update the content of the h1 element with the fetched data
-        //         $('#totalInternationalJournal').text(response);
-        //         $('#totalInternationalJournal').removeClass(loadingSpinnerClass);
-        //     },
-        //     error: function(error) {
-        //         console.error('Error fetching data:', error);
-        //         $('#totalInternationalJournal').addClass(loadingSpinnerClass);
-        //     }
-        // });
+        $('#totalInternationalJournal').addClass(loadingSpinnerClass);
+        $.ajax({
+            url: 'dashboard/getTotalInternationalPublication',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update the content of the h1 element with the fetched data
+                $('#totalInternationalJournal').text(response);
+                $('#totalInternationalJournal').removeClass(loadingSpinnerClass);
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error);
+                $('#totalInternationalJournal').addClass(loadingSpinnerClass);
+            }
+        });
     });
 </script>

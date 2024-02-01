@@ -151,5 +151,19 @@ class Dashboard_model
                 "data" => $documentsResult
             );
         }
-    }   
+    }
+    
+    public function getTotalCountInReputableInternationalJournals () {
+        $this->db->query(
+            "SELECT COUNT(DISTINCT scopus_documents.id) + COUNT(DISTINCT wos_documents.id) AS total_publikasi_internasional " .
+                " FROM authors " .
+                " LEFT JOIN " . $this->tableScopus_doc . " ON authors.id_sinta = " . $this->tableScopus_doc . ".id_sinta_author  " .
+                " LEFT JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author " 
+        );
+
+        $totalQueryResult = $this->db->single();
+        $recordsTotal = $totalQueryResult['total_publikasi_internasional'];
+
+        return $recordsTotal;
+    }
 }
