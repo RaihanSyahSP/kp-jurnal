@@ -71,7 +71,7 @@ if (!isset($_SESSION['username'])) {
             </svg>
           </label>
         </div>
-        <div class="text-2xl flex-1 px-2 mx-2 font-bold lg:text-xl">Jurnal UNIKOM</div>
+        <div class="text-2xl flex-1 px-2 mx-2 font-bold lg:text-xl">Jurnal Publikasi Ilmiah UNIKOM</div>
         <div class="flex-none hidden lg:block">
           <ul class="menu menu-horizontal font-semibold">
             <!-- Navbar menu content here -->

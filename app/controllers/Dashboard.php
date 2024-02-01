@@ -37,4 +37,16 @@ class Dashboard extends Controller
         $res = $this->model('Dashboard_model')->getTotalCountInReputableInternationalJournals();
         echo json_encode($res);
     }
+
+    public function getCountBookByLecture() {
+        $params = $_REQUEST;
+        $res = $this->model('Dashboard_model')->getBookCountByLecture();
+        echo json_encode($res);
+    }
+
+    public function getTotalBook() {
+        $params = $_REQUEST;
+        $res = $this->model('Dashboard_model')->getTotalBookCount();
+        echo json_encode($res);
+    }
 }

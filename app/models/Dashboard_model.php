@@ -6,6 +6,7 @@ class Dashboard_model
     private $tableAuthors = 'authors';
     private $tableWos_doc = 'wos_documents';
     private $tableScopus_doc = 'scopus_documents';
+    private $tableBook_summary = 'book_summary';
     private $db;
 
     public function __construct()
@@ -92,7 +93,8 @@ class Dashboard_model
         return $recordsTotal;
     }
 
-    public function getPublicationCountInReputableInternationalJournals () { {
+    public function getPublicationCountInReputableInternationalJournals () 
+    { {
             // var_dump($params);
             $columns = array(
                 0 => "authors.id",
@@ -163,6 +165,78 @@ class Dashboard_model
 
         $totalQueryResult = $this->db->single();
         $recordsTotal = $totalQueryResult['total_publikasi_internasional'];
+
+        return $recordsTotal;
+    }
+
+    public function getBookCountByLecture()
+    { {
+            // var_dump($params);
+            $columns = array(
+                0 => "book_summary.id",
+                1 => "authors.fullname",
+                2 => "book_summary.total_document",
+            );
+
+            ## Request with parameters, define variables
+            $params = $_REQUEST;
+            $where = "";
+            $recordsTotal = $recordsFiltered = 0;
+
+            ## Define conditions
+            if (!empty($params['search']['value'])) {
+                $where = " WHERE authors.fullname LIKE '%" . $params['search']['value'] . "%' 
+                      OR book_summary.total_document LIKE '%" . $params['search']['value'] . "%'";
+            }
+
+            ## Convert column array to select value
+            $select = implode(", ", $columns);
+
+            ## Fetch data
+            $query = "SELECT book_summary.id, authors.fullname, book_summary.total_document " .
+            "FROM book_summary " .
+            "JOIN " . $this->tableAuthors . " ON authors.id_sinta = " . $this->tableBook_summary . ".id_sinta  " .
+            $where .
+            "ORDER BY " . $columns[$params['order'][0]['column']] . " " . $params['order'][0]['dir'] .
+            " LIMIT " . $params['start'] . "," . $params['length'] . "";
+
+            $this->db->query($query);
+            $documentsResult = $this->db->resultSet();
+
+            ## If data found, set an array for response
+            if ($documentsResult) {
+                ## Total count for recordsTotal & recordsFiltered
+                $this->db->query(
+                    "SELECT COUNT(DISTINCT book_summary.id) as total " .
+                    "FROM book_summary " .
+                    "JOIN " . $this->tableAuthors . " ON authors.id_sinta = " . $this->tableBook_summary . ".id_sinta  " .
+                    $where 
+                );
+
+                $totalQueryResult = $this->db->single();
+                $recordsTotal = $totalQueryResult['total'];
+                $recordsFiltered = $recordsTotal; // Jika tidak ada kondisi WHERE pada jumlah total, maka sama dengan jumlah total
+            }
+
+            return array(
+                "draw" => intval($params['draw']),
+                "recordsTotal" => intval($recordsTotal),
+                "recordsFiltered" => intval($recordsFiltered),
+                "data" => $documentsResult
+            );
+        }
+    }
+
+    public function getTotalBookCount()
+    {
+        $this->db->query(
+            "SELECT COUNT(DISTINCT book_summary.id) as total " .
+                " FROM book_summary " .
+                " JOIN " . $this->tableAuthors . " ON authors.id_sinta = " . $this->tableBook_summary . ".id_sinta  " 
+        );
+
+        $totalQueryResult = $this->db->single();
+        $recordsTotal = $totalQueryResult['total'];
 
         return $recordsTotal;
     }
