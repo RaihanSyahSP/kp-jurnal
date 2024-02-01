@@ -4,6 +4,8 @@ class Dashboard_model
 {
     private $tableGscholar_doc = 'gscholar_documents';
     private $tableAuthors = 'authors';
+    private $tableWos_doc = 'wos_documents';
+    private $tableScopus_doc = 'scopus_documents';
     private $db;
 
     public function __construct()
@@ -89,4 +91,65 @@ class Dashboard_model
 
         return $recordsTotal;
     }
+
+    public function getPublicationCountInReputableInternationalJournals () { {
+            // var_dump($params);
+            $columns = array(
+                0 => "authors.id",
+                1 => "authors.fullname",
+                2 => "COUNT(DISTINCT scopus_documents.id) + COUNT(DISTINCT wos_documents.id) AS total_publikasi_internasional",
+            );
+
+            ## Request with parameters, define variables
+            $params = $_REQUEST;
+            $where = "";
+            $recordsTotal = $recordsFiltered = 0;
+
+            ## Define conditions
+            if (!empty($params['search']['value'])) {
+                $where = " WHERE authors.id LIKE '%" . $params['search']['value'] . "%' 
+                      OR authors.fullname LIKE '%" . $params['search']['value'] . "%'";
+            }
+
+            ## Convert column array to select value
+            $select = implode(", ", $columns);
+
+            ## Fetch data
+            $query = "SELECT authors.id, authors.fullname AS dosen_name, " .
+            "COUNT(DISTINCT scopus_documents.id) + COUNT(DISTINCT wos_documents.id) AS total_publikasi_internasional "  .
+            "FROM authors " .
+            "LEFT JOIN " . $this->tableScopus_doc . " ON authors.id_sinta = " . $this->tableScopus_doc . ".id_sinta_author  " .
+            "LEFT JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author " .
+            $where .
+            " GROUP BY authors.id, authors.fullname " .
+            "ORDER BY " . $columns[$params['order'][0]['column']] . " " . $params['order'][0]['dir'] .
+            " LIMIT " . $params['start'] . "," . $params['length'] . "";
+
+            $this->db->query($query);
+            $documentsResult = $this->db->resultSet();
+
+            ## If data found, set an array for response
+            if ($documentsResult) {
+                ## Total count for recordsTotal & recordsFiltered
+                $this->db->query(
+                    "SELECT COUNT(DISTINCT authors.id) as total " .
+                    "FROM authors " .
+                    "LEFT JOIN " . $this->tableScopus_doc . " ON authors.id_sinta = " . $this->tableScopus_doc . ".id_sinta_author  " .
+                    "LEFT JOIN " . $this->tableWos_doc ." ON authors.id_sinta = " . $this->tableWos_doc .  ".id_sinta_author " .
+                    $where
+                );
+
+                $totalQueryResult = $this->db->single();
+                $recordsTotal = $totalQueryResult['total'];
+                $recordsFiltered = $recordsTotal; // Jika tidak ada kondisi WHERE pada jumlah total, maka sama dengan jumlah total
+            }
+
+            return array(
+                "draw" => intval($params['draw']),
+                "recordsTotal" => intval($recordsTotal),
+                "recordsFiltered" => intval($recordsFiltered),
+                "data" => $documentsResult
+            );
+        }
+    }   
 }

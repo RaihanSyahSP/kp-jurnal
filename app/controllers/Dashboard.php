@@ -23,4 +23,11 @@ class Dashboard extends Controller
         $res = $this->model('Dashboard_model')->getTotalCitationCountGscholar();
         echo json_encode($res);
     }
+
+    public function getCountInternationalJournal()
+    {
+        $params = $_REQUEST;
+        $res = $this->model('Dashboard_model')->getPublicationCountInReputableInternationalJournals();
+        echo json_encode($res);
+    }
 }

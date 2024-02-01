@@ -38,7 +38,7 @@
                 </div>
                 <h1 id="totalCitationCount" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
                 <div class="flex flex-row justify-between group-hover:text-gray-200">
-                    <p>Jumlah Per Sitasi Dosen</p>
+                    <p>Jumlah Sitasi Per Dosen</p>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 group-hover:text-gray-200" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
@@ -80,11 +80,10 @@
                     </div>
                     <div class="inline-flex text-sm text-gray-600 group-hover:text-gray-200 sm:text-base">
                         </svg>
-                        <button class="btn btn-ghost">Detail</button>
+                        <button class="btn btn-ghost" onclick="my_modal_3.showModal()">Detail</button>
                     </div>
                 </div>
-                <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50">145
-                </h1>
+                <h1 id=" totalInternationalJournal" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
                 <div class="flex flex-row justify-between group-hover:text-gray-200">
                     <p>Jumlah Publikasi Internasional</p>
                     <span>
@@ -99,13 +98,13 @@
 </div>
 
 
-<!-- Open the modal using ID.showModal() method -->
+<!-- modal jumlah sitasi per dosen -->
 <dialog id="my_modal_2" class="modal">
     <div class="modal-box">
         <h3 class="font-bold text-lg">Detail Jumlah Data Sitasi Google Scholar</h3>
         <!-- datatable -->
         <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
-            <table id="myTable" class="display" style="width: 100%;">
+            <table id="tabelSitasi" class="display" style="width: 100%;">
                 <thead>
                     <tr class="text-xl md:text-base">
                         <th>No</th>
@@ -118,57 +117,11 @@
                 <tbody>
                     <script>
                         $(document).ready(function() {
-                            // function for export all data excel with server side processing
-                            function newexportaction(e, dt, button, config) {
-                                var self = this;
-
-                                // Save the original button content
-                                var originalContent = button.html();
-
-                                // Start the processing indicator
-                                button.html('<span class="absolute left-40 loading loading-dots loading-lg"></span>');
-
-                                var oldStart = dt.settings()[0]._iDisplayStart;
-                                dt.one('preXhr', function(e, s, data) {
-                                    // Just this once, load all data from the server...
-                                    data.start = 0;
-                                    data.length = 2147483647;
-                                    dt.one('preDraw', function(e, settings) {
-                                        // Call the original action function
-                                        if (button[0].className.indexOf('buttons-excel') >= 0) {
-                                            $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
-                                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
-                                                $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-                                        }
-                                        dt.one('preXhr', function(e, s, data) {
-                                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-                                            // Set the property to what it was before exporting.
-                                            settings._iDisplayStart = oldStart;
-                                            data.start = oldStart;
-                                        });
-
-                                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-                                        setTimeout(function() {
-                                            // Reset the button content to its original state
-                                            button.html(originalContent);
-                                            dt.ajax.reload();
-                                        }, 0);
-
-                                        // Prevent rendering of the full data to the DOM
-                                        return false;
-                                    });
-                                });
-                                // Requery the server with the new one-time export settings
-                                dt.ajax.reload(function() {
-                                    // Stop the processing indicator
-                                    dt.buttons().processing(false);
-                                });
-                            }
 
                             // Declare table variable outside the DataTable initialization
                             var table;
 
-                            table = $('#myTable').DataTable({
+                            table = $('#tabelSitasi').DataTable({
                                 "dom": 'lfBrtip',
                                 "responsive": {
                                     details: {
@@ -235,6 +188,92 @@
     </form>
 </dialog>
 
+<!-- modal jumlah jurnal internasional dosen -->
+<dialog id="my_modal_3" class="modal">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg">Detail Jumlah Publikasi Internasional</h3>
+        <!-- datatable -->
+        <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
+            <table id="tabelPublikasiInter" class="display" style="width: 100%;">
+                <thead>
+                    <tr class="text-xl md:text-base">
+                        <th>No</th>
+                        <th>Nama Dosen</th>
+                        <th>Jumlah</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <script>
+                        $(document).ready(function() {
+
+                            // Declare table variable outside the DataTable initialization
+                            var table;
+
+                            table = $('#tabelPublikasiInter').DataTable({
+                                "dom": 'lfBrtip',
+                                "responsive": {
+                                    details: {
+                                        renderer: function(api, rowIdx, columns) {
+                                            var data = $.map(columns, function(col, i) {
+                                                return col.hidden ?
+                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
+                                                    '<td>' + col.title + ':' + '</td> ' +
+                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
+                                                    '</tr>' :
+                                                    '';
+                                            }).join('');
+
+                                            return data ?
+                                                $('<table/>').append(data) :
+                                                false;
+                                        }
+                                    }
+                                },
+                                "fixedHeader": true,
+                                "buttons": [{
+                                    "extend": 'excel',
+                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "titleAttr": 'Excel',
+                                    "action": newexportaction
+                                }, ],
+                                "processing": true,
+                                "serverSide": true,
+                                "pageLength": 10,
+                                "lengthMenu": [10, 25, 50, 75, 100],
+                                "ajax": {
+                                    "url": "/dashboard/getCountInternationalJournal",
+                                    "type": "post",
+                                    "datatype": "json"
+                                },
+                                columns: [{
+                                        data: "id",
+                                        class: 'responsive'
+                                    },
+                                    {
+                                        data: "dosen_name",
+                                        class: 'responsive'
+                                    },
+                                    {
+                                        data: "total_publikasi_internasional",
+                                        class: 'responsive'
+                                    },
+                                ]
+                            });
+
+                        });
+                    </script>
+                </tbody>
+            </table>
+        </div>
+        <!-- end datatable -->
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
+<script src="<?= BASEURL; ?>/js/exportExcel.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -256,5 +295,22 @@
                 $('#totalCitationCount').addClass(loadingSpinnerClass);
             }
         });
+
+        // Ajax call to get total international journal count
+        // $('#totalInternationalJournal').addClass(loadingSpinnerClass);
+        // $.ajax({
+        //     url: 'dashboard/getTotalInternationalJournal',
+        //     method: 'GET',
+        //     dataType: 'json',
+        //     success: function(response) {
+        //         // Update the content of the h1 element with the fetched data
+        //         $('#totalInternationalJournal').text(response);
+        //         $('#totalInternationalJournal').removeClass(loadingSpinnerClass);
+        //     },
+        //     error: function(error) {
+        //         console.error('Error fetching data:', error);
+        //         $('#totalInternationalJournal').addClass(loadingSpinnerClass);
+        //     }
+        // });
     });
 </script>
