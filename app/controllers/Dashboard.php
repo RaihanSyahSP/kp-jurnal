@@ -9,4 +9,11 @@ class Dashboard extends Controller
         $this->view('dashboard/index', $data);
         $this->view('templates/footer');
     }
+
+    public function getCitedCountGscholar()
+    {
+        $params = $_REQUEST;
+        $res = $this->model('Dashboard_model')->getCitationCountPerPublicationLecture();
+        echo json_encode($res);
+    }
 }
