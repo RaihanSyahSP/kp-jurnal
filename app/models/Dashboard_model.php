@@ -18,7 +18,7 @@ class Dashboard_model
             0 => "gscholar_documents.id",
             1 => "gscholar_documents.title",
             2 => "authors.fullname",
-            3 => "gscholar_documents.citation",
+            3 => "gscholar_documents.citation", 
         );
 
         ## Request with parameters, define variables
@@ -34,11 +34,15 @@ class Dashboard_model
                       OR gscholar_documents.citation LIKE '%" . $params['search']['value'] . "%'";
         }
 
+        // Add condition for publish_year greater than 2019
+        $publishYearCondition = " AND gscholar_documents.publish_year > 2018";
+        $where .= $publishYearCondition;
+
         ## Convert column array to select value
         $select = implode(", ", $columns);
 
         ## Fetch data
-        $query = "SELECT " . $select .
+        $query = "SELECT " . $select . 
             " FROM " . $this->tableGscholar_doc .
             " JOIN " . $this->tableAuthors .
             " ON " . $this->tableGscholar_doc . ".id_sinta_author = " . $this->tableAuthors . ".id_sinta  " . $where .
@@ -70,5 +74,19 @@ class Dashboard_model
             "recordsFiltered" => intval($recordsFiltered),
             "data" => $documentsResult
         );
+    }
+
+    public function getTotalCitationCountGscholar()
+    {
+        $this->db->query(
+            "SELECT SUM(citation) as total " .
+                " FROM " . $this->tableGscholar_doc . 
+                " WHERE publish_year > 2018"
+        );
+
+        $totalQueryResult = $this->db->single();
+        $recordsTotal = $totalQueryResult['total'];
+
+        return $recordsTotal;
     }
 }

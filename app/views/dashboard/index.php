@@ -36,9 +36,9 @@
                         <button class="btn show-modal btn-ghost" onclick="my_modal_2.showModal()">Detail</button>
                     </div>
                 </div>
-                <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50">139</h1>
+                <h1 id="totalCitationCount" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
                 <div class="flex flex-row justify-between group-hover:text-gray-200">
-                    <p>Jumlah Sitasi Dosen</p>
+                    <p>Jumlah Per Sitasi Dosen</p>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 group-hover:text-gray-200" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
@@ -191,7 +191,7 @@
                                 "fixedHeader": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline">Download Excel</button>',
+                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -232,7 +232,29 @@
     </div>
     <form method="dialog" class="modal-backdrop">
         <button>close</button>
-
     </form>
-
 </dialog>
+
+
+<script>
+    $(document).ready(function() {
+        const loadingSpinnerClass = 'loading loading-spinner loading-lg'
+        $('#totalCitationCount').addClass(loadingSpinnerClass);
+
+        // Ajax call to get total citation count
+        $.ajax({
+            url: 'dashboard/getTotalCitedCountGscholar',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update the content of the h1 element with the fetched data
+                $('#totalCitationCount').text(response);
+                $('#totalCitationCount').removeClass(loadingSpinnerClass);
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error);
+                $('#totalCitationCount').addClass(loadingSpinnerClass);
+            }
+        });
+    });
+</script>
