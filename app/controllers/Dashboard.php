@@ -55,4 +55,10 @@ class Dashboard extends Controller
         $res = $this->model('Dashboard_model')->getTotalISSNJournal();
         echo json_encode($res);
     }
+
+    public function getAllISSNJournal() {
+        $params = $_REQUEST;
+        $res = $this->model('Dashboard_model')->getISSNJournal();
+        echo json_encode($res);
+    }
 }
