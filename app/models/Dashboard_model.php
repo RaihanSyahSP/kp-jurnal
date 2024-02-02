@@ -240,4 +240,19 @@ class Dashboard_model
 
         return $recordsTotal;
     }
+
+    public function getTotalISSNJournal() {
+        $this->db->query(
+            "SELECT COUNT(DISTINCT scopus_documents.id) + COUNT(DISTINCT wos_documents.id) as total
+            FROM scopus_documents
+            JOIN authors ON scopus_documents.id_sinta_author = authors.id_sinta
+            JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author
+            WHERE wos_documents.issn != '' AND scopus_documents.issn != '';"
+        );
+
+        $totalQueryResult = $this->db->single();
+        $recordsTotal = $totalQueryResult['total'];
+
+        return $recordsTotal;
+    }
 }

@@ -49,4 +49,10 @@ class Dashboard extends Controller
         $res = $this->model('Dashboard_model')->getTotalBookCount();
         echo json_encode($res);
     }
+
+    public function getTotalISSNPublication() {
+        $params = $_REQUEST;
+        $res = $this->model('Dashboard_model')->getTotalISSNJournal();
+        echo json_encode($res);
+    }
 }

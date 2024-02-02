@@ -5,8 +5,8 @@
                 <div class="flex flex-row justify-between items-center">
                     <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:text-gray-50" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                            <path fill-rule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
                         </svg>
                     </div>
                     <div class="inline-flex text-sm text-gray-600 group-hover:text-gray-200 sm:text-base">
@@ -29,7 +29,8 @@
                 <div class="flex flex-row justify-between items-center">
                     <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:text-gray-50" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
                         </svg>
                     </div>
                     <div class="inline-flex text-sm text-gray-600 group-hover:text-gray-200 sm:text-base">
@@ -38,7 +39,7 @@
                 </div>
                 <h1 id="totalCitationCount" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
                 <div class="flex flex-row justify-between group-hover:text-gray-200">
-                    <p>Jumlah Sitasi Dosen</p>
+                    <p>Jumlah Sitasi</p>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 group-hover:text-gray-200" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
@@ -60,9 +61,9 @@
                         <button class="btn show-modal btn-ghost">Detail</button>
                     </div>
                 </div>
-                <h1 class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50">76</h1>
+                <h1 id="totalISSNJournal" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
                 <div class="flex flex-row justify-between group-hover:text-gray-200">
-                    <p>Jumlah Prosiding Scopus</p>
+                    <p>Jumlah Artikel ISSN</p>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 group-hover:text-gray-200" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
@@ -76,10 +77,11 @@
                 <div class="flex flex-row justify-between items-center">
                     <div class="px-4 py-4 bg-gray-300  rounded-xl bg-opacity-30">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:text-gray-50" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                        </svg>
                     </div>
                     <div class="inline-flex text-sm text-gray-600 group-hover:text-gray-200 sm:text-base">
-                        </svg>
                         <button class="btn btn-ghost" onclick="my_modal_3.showModal()">Detail</button>
                     </div>
                 </div>
@@ -106,7 +108,7 @@
         <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
             <table id="tabelSitasi" class="display" style="width: 100%;">
                 <thead>
-                    <tr class="text-xl md:text-base">
+                    <tr class="text-sm md:text-xs">
                         <th>No</th>
                         <th>Judul</th>
                         <th>Nama Dosen</th>
@@ -196,7 +198,7 @@
         <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
             <table id="tabelPublikasiInter" class="display" style="width: 100%;">
                 <thead>
-                    <tr class="text-xl md:text-base">
+                    <tr class="text-sm md:text-xs">
                         <th>No</th>
                         <th>Nama Dosen</th>
                         <th>Jumlah</th>
@@ -276,12 +278,12 @@
 <!-- modal jumlah jurnal buku dosen -->
 <dialog id="my_modal_4" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box">
-        <h3 class="font-bold text-lg">Detail Jumlah Publikasi Internasional (Wos & Scopus)</h3>
+        <h3 class="font-bold text-lg">Detail Jumlah Buku Per Dosen</h3>
         <!-- datatable -->
         <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
             <table id="tableBook" class="display" style="width: 100%;">
                 <thead>
-                    <tr class="text-xl md:text-base">
+                    <tr class="text-sm md:text-xs">
                         <th>No</th>
                         <th>Nama Dosen</th>
                         <th>Jumlah</th>
@@ -412,6 +414,23 @@
             error: function(error) {
                 console.error('Error fetching data:', error);
                 $('#totalBook').addClass(loadingSpinnerClass);
+            }
+        });
+
+        // Ajax call to get total issn journal
+        $('#totalISSNJournal').addClass(loadingSpinnerClass);
+        $.ajax({
+            url: 'dashboard/getTotalISSNPublication',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update the content of the h1 element with the fetched data
+                $('#totalISSNJournal').text(response);
+                $('#totalISSNJournal').removeClass(loadingSpinnerClass);
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error);
+                $('#totalISSNJournal').addClass(loadingSpinnerClass);
             }
         });
 
