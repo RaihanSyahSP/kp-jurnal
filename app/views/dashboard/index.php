@@ -48,7 +48,7 @@
                         </svg>
                     </div>
                     <div class="inline-flex text-sm text-gray-600 group-hover:text-gray-200 sm:text-base">
-                        <button class="btn show-modal btn-ghost">Detail</button>
+                        <button class="btn show-modal btn-ghost" onclick="my_modal_5.showModal()">Detail</button>
                     </div>
                 </div>
                 <h1 id="totalISSNJournal" class="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-12 group-hover:text-gray-50"></h1>
@@ -339,6 +339,86 @@
         <button>close</button>
     </form>
 </dialog>
+
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg">Detail Jurnal Internasional Ber ISSN</h3>
+        <!-- datatable -->
+        <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
+            <table id="tableISSN" class="display" style="width: 100%;">
+                <thead>
+                    <tr class="text-sm md:text-xs">
+                        <th>No</th>
+                        <th>Judul</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <script>
+                        $(document).ready(function() {
+
+                            // Declare table variable outside the DataTable initialization
+                            var table;
+
+                            table = $('#tableISSN').DataTable({
+                                "dom": 'lfBrtip',
+                                "responsive": {
+                                    details: {
+                                        renderer: function(api, rowIdx, columns) {
+                                            var data = $.map(columns, function(col, i) {
+                                                return col.hidden ?
+                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
+                                                    '<td>' + col.title + ':' + '</td> ' +
+                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
+                                                    '</tr>' :
+                                                    '';
+                                            }).join('');
+
+                                            return data ?
+                                                $('<table/>').append(data) :
+                                                false;
+                                        }
+                                    }
+                                },
+                                "fixedHeader": true,
+                                "buttons": [{
+                                    "extend": 'excel',
+                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "titleAttr": 'Excel',
+                                    "action": newexportaction
+                                }, ],
+                                "processing": true,
+                                "serverSide": true,
+                                "pageLength": 10,
+                                "lengthMenu": [10, 25, 50, 75, 100],
+                                "ajax": {
+                                    "url": "/dashboard/getAllISSNJournal",
+                                    "type": "post",
+                                    "datatype": "json"
+                                },
+                                columns: [{
+                                        data: "id",
+                                        class: 'responsive'
+                                    },
+                                    {
+                                        data: "title",
+                                        class: 'responsive'
+                                    },
+                                ]
+                            });
+
+                        });
+                    </script>
+                </tbody>
+            </table>
+        </div>
+        <!-- end datatable -->
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
 
 
 <script src="<?= BASEURL; ?>/js/exportExcel.js"></script>

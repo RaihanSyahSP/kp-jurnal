@@ -255,4 +255,79 @@ class Dashboard_model
 
         return $recordsTotal;
     }
+
+    public function getISSNJournal()
+    {
+        $columns = array(
+            0 => "id",
+            1 => "title",
+        );
+
+        // Request with parameters, define variables
+        $params = $_REQUEST;
+        $where = "";
+        $recordsTotal = $recordsFiltered = 0;
+
+        // Add condition for ISSN not empty
+        $issnCondition = " WHERE wos_documents.issn != '' AND scopus_documents.issn != ''";
+        $where .= $issnCondition;
+
+        // Convert column array to select value
+        $select = implode(", ", $columns);
+
+        // Fetch data
+        $query = "SELECT " . $select .
+            " FROM (" .
+            "    SELECT scopus_documents.id, scopus_documents.title" .
+            "    FROM scopus_documents" .
+            "    JOIN authors ON scopus_documents.id_sinta_author = authors.id_sinta" .
+            "    JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author" .
+            $where .
+            "    UNION" .
+            "    SELECT wos_documents.id, wos_documents.title" .
+            "    FROM wos_documents" .
+            "    JOIN authors ON wos_documents.id_sinta_author = authors.id_sinta" .
+            "    JOIN scopus_documents ON authors.id_sinta = scopus_documents.id_sinta_author" .
+            $where .
+            ") AS combined_data" .
+            " ORDER BY " . $columns[$params['order'][0]['column']] . " " . $params['order'][0]['dir'] .
+            " LIMIT " . $params['start'] . "," . $params['length'] . "";
+
+        $this->db->query($query);
+        $documentsResult = $this->db->resultSet();
+
+        // If data found, set an array for response
+        if ($documentsResult) {
+            // Total count for recordsTotal & recordsFiltered
+            $this->db->query(
+                "SELECT COUNT(*) as total FROM (" .
+                    "    SELECT scopus_documents.id" .
+                    "    FROM scopus_documents" .
+                    "    JOIN authors ON scopus_documents.id_sinta_author = authors.id_sinta" .
+                    "    JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author" .
+                    $where .
+                    "    UNION" .
+                    "    SELECT wos_documents.id" .
+                    "    FROM wos_documents" .
+                    "    JOIN authors ON wos_documents.id_sinta_author = authors.id_sinta" .
+                    "    JOIN scopus_documents ON authors.id_sinta = scopus_documents.id_sinta_author" .
+                    $where .
+                    ") AS combined_data"
+            );
+
+            $totalQueryResult = $this->db->single();
+            $recordsTotal = $totalQueryResult['total'];
+            $recordsFiltered = $recordsTotal; // Jika tidak ada kondisi WHERE pada jumlah total, maka sama dengan jumlah total
+        }
+
+        return array(
+            "draw" => intval($params['draw']),
+            "recordsTotal" => intval($recordsTotal),
+            "recordsFiltered" => intval($recordsFiltered),
+            "data" => $documentsResult
+        );
+    }
+
+
+
 }
