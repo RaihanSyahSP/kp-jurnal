@@ -2,7 +2,7 @@
  <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
      <table id="myTable" class="display" style="width: 100%;">
          <thead>
-             <tr class="text-xl md:text-base">
+             <tr class="text-sm md:text-xs">
                  <th>No</th>
                  <th>Judul</th>
                  <th>Nama Publikasi</th>
