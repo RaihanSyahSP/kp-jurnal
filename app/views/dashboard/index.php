@@ -498,12 +498,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-<div class="container items-center px-4 py-8 m-auto mt-5 flex flex-col lg:flex-row">
-    <div class="w-full px-5 lg:px-4 lg:w-1/2">
+<div class="container items-center px-4 py-8 m-auto mt-5 grid grid-cols-1 gap-8 lg:grid-cols-2">
+    <div class="w-full px-5 lg:px-4">
         <canvas id="bar-chart-get-publication-count-gscholar"></canvas>
     </div>
-    <div class="w-full px-5 lg:px-4 lg:w-1/2">
+    <div class="w-full px-5 lg:px-4">
         <canvas id="bar-chart-get-publication-count-scopus"></canvas>
+    </div>
+    <div class="w-full px-5 lg:px-4 ">
+        <canvas id="bar-chart-get-publication-count-wos"></canvas>
     </div>
 </div>
 
@@ -540,7 +543,7 @@
         }
     });
 
-    // Ajax call to get publication count last 5 years Google Scholar
+    // Ajax call to get publication count last 5 years Google Scopus
     $.ajax({
         url: 'dashboard/getPublicationCountLast5YearsScopus',
         method: 'GET',
@@ -558,6 +561,38 @@
                         label: "Jumlah Publikasi 5 Tahun Terakhir Scopus",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                         data: count
+                    }]
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to get publication count!',
+            })
+        }
+    });
+
+    // Ajax call to get publication count last 5 years Google Wos
+    $.ajax({
+        url: 'dashboard/getPublicationCountLast5YearsWos',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const publish_year = response.map(data => data.publish_year);
+            const publication_count = response.map(data => data.count);
+
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-publication-count-wos"), {
+                type: 'bar',
+                data: {
+                    labels: publish_year,
+                    datasets: [{
+                        label: "Jumlah Publikasi 5 Tahun Terakhir Web of Science",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: publication_count
                     }]
                 },
             });

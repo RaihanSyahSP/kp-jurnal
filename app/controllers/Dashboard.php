@@ -73,4 +73,10 @@ class Dashboard extends Controller
         $res = $this->model('Dashboard_model')->getPublicationCountLast5YearsScopus();
         echo json_encode($res);
     }
+
+    public function getPublicationCountLast5YearsWos()
+    {
+        $res = $this->model('Dashboard_model')->getPublicationCountLast5YearsWos();
+        echo json_encode($res);
+    }
 }

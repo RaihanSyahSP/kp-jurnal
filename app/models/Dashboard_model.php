@@ -349,4 +349,14 @@ class Dashboard_model
         return $this->db->resultSet();
     }
 
+    public function getPublicationCountLast5YearsWos()
+    {
+        $query =
+            "SELECT publish_year, COUNT(publish_year) as count FROM " . $this->tableWos_doc .
+            " WHERE publish_year >= YEAR(CURDATE()) - 5" .
+            " GROUP BY publish_year ORDER BY publish_year";
+        $this->db->query($query);
+        return $this->db->resultSet();
+    }
+
 }
