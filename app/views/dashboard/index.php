@@ -105,28 +105,11 @@
 
                             table = $('#tabelSitasi').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
                                 "fixedHeader": true,
+                                "responsive": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -194,28 +177,11 @@
 
                             table = $('#tabelPublikasiInter').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
                                 "fixedHeader": true,
+                                "responsive": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -279,28 +245,11 @@
 
                             table = $('#tableBook').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
                                 "fixedHeader": true,
+                                "responsive": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -362,28 +311,11 @@
 
                             table = $('#tableISSN').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
+                                "responsive": true,
                                 "fixedHeader": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
