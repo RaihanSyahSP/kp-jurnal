@@ -54,6 +54,14 @@ if (!isset($_SESSION['username'])) {
       }
 
     }
+
+    .download-excel {
+      padding-left: 0;
+
+      @media screen and (min-width:640px) {
+        padding-left: 90%;
+      }
+    }
   </style>
 
 </head>

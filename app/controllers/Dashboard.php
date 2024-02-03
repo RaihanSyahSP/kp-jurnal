@@ -61,4 +61,29 @@ class Dashboard extends Controller
         $res = $this->model('Dashboard_model')->getISSNJournal();
         echo json_encode($res);
     }
+
+    public function  getPublicationCountLast5YearsGscholar()
+    {
+        $res = $this->model('Dashboard_model')->getPublicationCountLast5YearsGscholar();
+        echo json_encode($res);
+    }
+
+    public function getPublicationCountLast5YearsScopus()
+    {
+        $res = $this->model('Dashboard_model')->getPublicationCountLast5YearsScopus();
+        echo json_encode($res);
+    }
+
+    public function getPublicationCountLast5YearsWos()
+    {
+        $res = $this->model('Dashboard_model')->getPublicationCountLast5YearsWos();
+        echo json_encode($res);
+    }
+
+     public function getTopTenSintaV3OverallScore()
+     {
+        $res = $this->model('Dashboard_model')->getTopTenSintaV3OverallScore();
+        echo json_encode($res);
+     }
+
 }

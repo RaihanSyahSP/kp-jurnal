@@ -105,28 +105,11 @@
 
                             table = $('#tabelSitasi').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
                                 "fixedHeader": true,
+                                "responsive": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -194,28 +177,11 @@
 
                             table = $('#tabelPublikasiInter').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
                                 "fixedHeader": true,
+                                "responsive": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -279,28 +245,11 @@
 
                             table = $('#tableBook').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
                                 "fixedHeader": true,
+                                "responsive": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -362,28 +311,11 @@
 
                             table = $('#tableISSN').DataTable({
                                 "dom": 'lfBrtip',
-                                "responsive": {
-                                    details: {
-                                        renderer: function(api, rowIdx, columns) {
-                                            var data = $.map(columns, function(col, i) {
-                                                return col.hidden ?
-                                                    '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
-                                                    '<td>' + col.title + ':' + '</td> ' +
-                                                    '<td' + (col.title === 'Edit' ? ' class="td-buttons"' : '') + '>' + col.data + '</td>' +
-                                                    '</tr>' :
-                                                    '';
-                                            }).join('');
-
-                                            return data ?
-                                                $('<table/>').append(data) :
-                                                false;
-                                        }
-                                    }
-                                },
+                                "responsive": true,
                                 "fixedHeader": true,
                                 "buttons": [{
                                     "extend": 'excel',
-                                    "text": '<button class="btn btn-outline  my-5">Download Excel</button>',
+                                    "text": '<div class="download-excel"><button class="btn btn-outline  my-5">Download Excel</button></div>',
                                     "titleAttr": 'Excel',
                                     "action": newexportaction
                                 }, ],
@@ -493,6 +425,168 @@
                 $('#totalISSNJournal').addClass(loadingSpinnerClass);
             }
         });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+<div class="container items-center px-4 py-8 m-auto mt-5 grid grid-cols-1 gap-8 lg:grid-cols-2">
+    <div class="w-full px-5 lg:px-4">
+        <canvas id="bar-chart-get-publication-count-gscholar"></canvas>
+    </div>
+    <div class="w-full px-5 lg:px-4">
+        <canvas id="bar-chart-get-publication-count-scopus"></canvas>
+    </div>
+    <div class="w-full px-5 lg:px-4 ">
+        <canvas id="bar-chart-get-publication-count-wos"></canvas>
+    </div>
+    <div class="w-full px-5 lg:px-4 ">
+        <canvas id="bar-chart-get-top-ten-v3score"></canvas>
+    </div>
+</div>
+
+<script>
+    // Ajax call to get publication count last 5 years Google Scholar
+    $.ajax({
+        url: 'dashboard/getPublicationCountLast5YearsGscholar',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const publish_year = response.map(data => data.publish_year);
+            const publication_count = response.map(data => data.count);
+
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-publication-count-gscholar"), {
+                type: 'bar',
+                data: {
+                    labels: publish_year,
+                    datasets: [{
+                        label: "Jumlah Publikasi 5 Tahun Terakhir Google Scholar",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: publication_count
+                    }]
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to get publication count!',
+            })
+        }
+    });
+
+    // Ajax call to get publication count last 5 years Google Scopus
+    $.ajax({
+        url: 'dashboard/getPublicationCountLast5YearsScopus',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const year = response.map(data => data.year);
+            const count = response.map(data => data.count);
+
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-publication-count-scopus"), {
+                type: 'bar',
+                data: {
+                    labels: year,
+                    datasets: [{
+                        label: "Jumlah Publikasi 5 Tahun Terakhir Scopus",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: count
+                    }]
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to get publication count!',
+            })
+        }
+    });
+
+    // Ajax call to get publication count last 5 years Google Wos
+    $.ajax({
+        url: 'dashboard/getPublicationCountLast5YearsWos',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const publish_year = response.map(data => data.publish_year);
+            const publication_count = response.map(data => data.count);
+
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-publication-count-wos"), {
+                type: 'bar',
+                data: {
+                    labels: publish_year,
+                    datasets: [{
+                        label: "Jumlah Publikasi 5 Tahun Terakhir Web of Science",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: publication_count
+                    }]
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to get publication count!',
+            })
+        }
+    });
+
+    // Ajax call to get publication count last 5 years Google Wos
+    $.ajax({
+        url: 'dashboard/getTopTenSintaV3OverallScore',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const lectureName = response.map(data => data.fullname);
+            const sintaScore = response.map(data => data.sinta_score_v3_overall);
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-top-ten-v3score"), {
+                type: 'bar',
+                data: {
+                    labels: lectureName,
+                    datasets: [{
+                        label: "Top 10 Dosen Berdasarkan SINTA Overall V3 Score Tertinggi",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: sintaScore
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            ticks: {
+                                maxTicksLimit: 10, // Batas jumlah tanda sumbu x yang ditampilkan
+                                callback: function(value) {
+                                    // truncate the labels only in this axis
+                                    const lbl = this.getLabelForValue(value);
+                                    if (typeof lbl === 'string' && lbl.length > 10) {
+                                        return `${lbl.substring(0, 5)}...`;
+                                    }
+                                    return lbl;
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to top 10 overall v3 score!',
+            })
+        }
     });
 </script>

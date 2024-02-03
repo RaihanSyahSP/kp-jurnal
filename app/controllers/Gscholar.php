@@ -27,4 +27,5 @@ class Gscholar extends Controller {
         $res = $this->model('Gscholar_model')->editGscholarInfo($id, $issn, $doi, $kolaborasi_mhs, $koaborasi_non_unikom);
         echo json_encode($res);
     }
+
 }
