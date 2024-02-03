@@ -508,6 +508,9 @@
     <div class="w-full px-5 lg:px-4 ">
         <canvas id="bar-chart-get-publication-count-wos"></canvas>
     </div>
+    <div class="w-full px-5 lg:px-4 ">
+        <canvas id="bar-chart-get-top-ten-v3score"></canvas>
+    </div>
 </div>
 
 <script>
@@ -603,6 +606,54 @@
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Failed to get publication count!',
+            })
+        }
+    });
+
+    // Ajax call to get publication count last 5 years Google Wos
+    $.ajax({
+        url: 'dashboard/getTopTenSintaV3OverallScore',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const lectureName = response.map(data => data.fullname);
+            const sintaScore = response.map(data => data.sinta_score_v3_overall);
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-top-ten-v3score"), {
+                type: 'bar',
+                data: {
+                    labels: lectureName,
+                    datasets: [{
+                        label: "Top 10 Dosen Berdasarkan SINTA Overall V3 Score Tertinggi",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: sintaScore
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            ticks: {
+                                maxTicksLimit: 10, // Batas jumlah tanda sumbu x yang ditampilkan
+                                callback: function(value) {
+                                    // truncate the labels only in this axis
+                                    const lbl = this.getLabelForValue(value);
+                                    if (typeof lbl === 'string' && lbl.length > 10) {
+                                        return `${lbl.substring(0, 5)}...`;
+                                    }
+                                    return lbl;
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to top 10 overall v3 score!',
             })
         }
     });

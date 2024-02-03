@@ -359,4 +359,13 @@ class Dashboard_model
         return $this->db->resultSet();
     }
 
+    public function getTopTenSintaV3OverallScore()
+    {
+        $query =
+            "SELECT authors.fullname, authors.sinta_score_v3_overall FROM authors " .
+            "ORDER BY authors.sinta_score_v3_overall DESC LIMIT 10";
+        $this->db->query($query);
+        return $this->db->resultSet();
+    }
+
 }
