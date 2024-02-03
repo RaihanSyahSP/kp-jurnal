@@ -328,7 +328,7 @@ class Dashboard_model
         );
     }
 
-    public function getPublicationCountLast5Years()
+    public function getPublicationCountLast5YearsGscholar()
     {
         $query =
             "SELECT publish_year, COUNT(publish_year) as count FROM " . $this->tableGscholar_doc .
@@ -338,5 +338,15 @@ class Dashboard_model
         return $this->db->resultSet();
     }
 
+    public function getPublicationCountLast5YearsScopus()
+    {
+        $query =
+            "SELECT YEAR(scopus_documents.cover_date) AS year, COUNT(scopus_documents.cover_date) AS count FROM " . $this->tableScopus_doc .
+            " WHERE scopus_documents.cover_date >= CURDATE() - INTERVAL 5 YEAR" .
+            " GROUP BY YEAR(scopus_documents.cover_date)" .
+            " ORDER BY YEAR(scopus_documents.cover_date)";
+        $this->db->query($query);
+        return $this->db->resultSet();
+    }
 
 }

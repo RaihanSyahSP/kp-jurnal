@@ -498,14 +498,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-<div class="container items-center px-4 py-8 m-auto mt-5">
-    <canvas id="bar-chart-get-publication-count-gscholar"></canvas>
+<div class="container items-center px-4 py-8 m-auto mt-5 flex flex-col lg:flex-row">
+    <div class="w-full px-5 lg:px-4 lg:w-1/2">
+        <canvas id="bar-chart-get-publication-count-gscholar"></canvas>
+    </div>
+    <div class="w-full px-5 lg:px-4 lg:w-1/2">
+        <canvas id="bar-chart-get-publication-count-scopus"></canvas>
+    </div>
 </div>
 
 <script>
     // Ajax call to get publication count last 5 years Google Scholar
     $.ajax({
-        url: 'dashboard/getPublicationCountLast5Years',
+        url: 'dashboard/getPublicationCountLast5YearsGscholar',
         method: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -521,6 +526,38 @@
                         label: "Jumlah Publikasi 5 Tahun Terakhir Google Scholar",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                         data: publication_count
+                    }]
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to get publication count!',
+            })
+        }
+    });
+
+    // Ajax call to get publication count last 5 years Google Scholar
+    $.ajax({
+        url: 'dashboard/getPublicationCountLast5YearsScopus',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const year = response.map(data => data.year);
+            const count = response.map(data => data.count);
+
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-publication-count-scopus"), {
+                type: 'bar',
+                data: {
+                    labels: year,
+                    datasets: [{
+                        label: "Jumlah Publikasi 5 Tahun Terakhir Scopus",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: count
                     }]
                 },
             });
