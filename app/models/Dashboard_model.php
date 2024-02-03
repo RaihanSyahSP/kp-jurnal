@@ -328,6 +328,15 @@ class Dashboard_model
         );
     }
 
+    public function getPublicationCountLast5Years()
+    {
+        $query =
+            "SELECT publish_year, COUNT(publish_year) as count FROM " . $this->tableGscholar_doc .
+            " WHERE publish_year >= YEAR(CURDATE()) - 5" .
+            " GROUP BY publish_year ORDER BY publish_year";
+        $this->db->query($query);
+        return $this->db->resultSet();
+    }
 
 
 }

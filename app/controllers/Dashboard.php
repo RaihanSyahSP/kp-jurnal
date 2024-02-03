@@ -61,4 +61,10 @@ class Dashboard extends Controller
         $res = $this->model('Dashboard_model')->getISSNJournal();
         echo json_encode($res);
     }
+
+    public function  getPublicationCountLast5Years()
+    {
+        $res = $this->model('Dashboard_model')->getPublicationCountLast5Years();
+        echo json_encode($res);
+    }
 }

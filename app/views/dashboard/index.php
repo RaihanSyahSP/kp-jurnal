@@ -499,13 +499,13 @@
 
 
 <div class="container items-center px-4 py-8 m-auto mt-5">
-    <canvas id="bar-chart-get-publication-count"></canvas>
+    <canvas id="bar-chart-get-publication-count-gscholar"></canvas>
 </div>
 
 <script>
-    // Ajax call to get publication count last 5 years
+    // Ajax call to get publication count last 5 years Google Scholar
     $.ajax({
-        url: 'gscholar/getPublicationCountLast5Years',
+        url: 'dashboard/getPublicationCountLast5Years',
         method: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -513,12 +513,12 @@
             const publication_count = response.map(data => data.count);
 
             // Bar chart
-            new Chart(document.getElementById("bar-chart-get-publication-count"), {
+            new Chart(document.getElementById("bar-chart-get-publication-count-gscholar"), {
                 type: 'bar',
                 data: {
                     labels: publish_year,
                     datasets: [{
-                        label: "Jumlah Publikasi 5 Tahun Terakhir",
+                        label: "Jumlah Publikasi 5 Tahun Terakhir Google Scholar",
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                         data: publication_count
                     }]

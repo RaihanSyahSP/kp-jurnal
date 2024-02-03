@@ -28,8 +28,4 @@ class Gscholar extends Controller {
         echo json_encode($res);
     }
 
-    public function  getPublicationCountLast5Years() {
-        $res = $this->model('Gscholar_model')->getPublicationCountLast5Years();
-        echo json_encode($res);
-    }
 }

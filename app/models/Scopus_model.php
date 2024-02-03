@@ -93,6 +93,5 @@ class Scopus_model
             "recordsFiltered" => intval($recordsFiltered),
             "data" => $documentsResult
         );
-    }
-
+    }   
 }
