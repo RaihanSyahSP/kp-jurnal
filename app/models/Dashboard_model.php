@@ -94,7 +94,7 @@ class Dashboard_model
     }
 
     public function getPublicationCountInReputableInternationalJournals () 
-    { {
+    { 
             // var_dump($params);
             $columns = array(
                 0 => "authors.id",
@@ -152,7 +152,6 @@ class Dashboard_model
                 "recordsFiltered" => intval($recordsFiltered),
                 "data" => $documentsResult
             );
-        }
     }
     
     public function getTotalCountInReputableInternationalJournals () {
@@ -170,7 +169,7 @@ class Dashboard_model
     }
 
     public function getBookCountByLecture()
-    { {
+    { 
             // var_dump($params);
             $columns = array(
                 0 => "book_summary.id",
@@ -224,7 +223,6 @@ class Dashboard_model
                 "recordsFiltered" => intval($recordsFiltered),
                 "data" => $documentsResult
             );
-        }
     }
 
     public function getTotalBookCount()
