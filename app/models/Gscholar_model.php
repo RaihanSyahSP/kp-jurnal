@@ -113,32 +113,13 @@ class Gscholar_model {
         return $this->db->execute();
     }
 
-
-    // public function getMahasiswaById($id)
-    // {
-    //     $this->db->query('SELECT * FROM ' . $this->table . ' WHERE id=:id');
-    //     $this->db->bind('id', $id);
-    //     return $this->db->single();
-    // }
-
-    // public function ubahDataMahasiswa($data)
-    // {
-    //     $query = "UPDATE mahasiswa SET
-    //                 nama = :nama,
-    //                 nrp = :nrp,
-    //                 email = :email,
-    //                 jurusan = :jurusan
-    //               WHERE id = :id";
-        
-    //     $this->db->query($query);
-    //     $this->db->bind('nama', $data['nama']);
-    //     $this->db->bind('nrp', $data['nrp']);
-    //     $this->db->bind('email', $data['email']);
-    //     $this->db->bind('jurusan', $data['jurusan']);
-    //     $this->db->bind('id', $data['id']);
-
-    //     $this->db->execute();
-
-    //     return $this->db->rowCount();
-    // }
+    public function getPublicationCountLast5Years()
+    {
+        $query = 
+            "SELECT publish_year, COUNT(publish_year) as count FROM " . $this->tableGScholar_doc .
+            " WHERE publish_year >= YEAR(CURDATE()) - 5" .
+            " GROUP BY publish_year ORDER BY publish_year";
+        $this->db->query($query);
+        return $this->db->resultSet();
+    }
 }

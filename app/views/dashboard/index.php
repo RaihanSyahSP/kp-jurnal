@@ -493,6 +493,45 @@
                 $('#totalISSNJournal').addClass(loadingSpinnerClass);
             }
         });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+<div class="container items-center px-4 py-8 m-auto mt-5">
+    <canvas id="bar-chart-get-publication-count"></canvas>
+</div>
+
+<script>
+    // Ajax call to get publication count last 5 years
+    $.ajax({
+        url: 'gscholar/getPublicationCountLast5Years',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const publish_year = response.map(data => data.publish_year);
+            const publication_count = response.map(data => data.count);
+
+            // Bar chart
+            new Chart(document.getElementById("bar-chart-get-publication-count"), {
+                type: 'bar',
+                data: {
+                    labels: publish_year,
+                    datasets: [{
+                        label: "Jumlah Publikasi 5 Tahun Terakhir",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                        data: publication_count
+                    }]
+                },
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to get publication count!',
+            })
+        }
     });
 </script>

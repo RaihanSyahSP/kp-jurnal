@@ -27,4 +27,9 @@ class Gscholar extends Controller {
         $res = $this->model('Gscholar_model')->editGscholarInfo($id, $issn, $doi, $kolaborasi_mhs, $koaborasi_non_unikom);
         echo json_encode($res);
     }
+
+    public function  getPublicationCountLast5Years() {
+        $res = $this->model('Gscholar_model')->getPublicationCountLast5Years();
+        echo json_encode($res);
+    }
 }
