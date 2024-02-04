@@ -87,6 +87,7 @@ if (!isset($_SESSION['username'])) {
             <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
             <li><a href="<?= BASEURL; ?>/wos">Web of Science</a></li>
             <li><a href="<?= BASEURL; ?>/scopus">Scopus</a></li>
+            <li><a href="<?= BASEURL; ?>/sinta">Sinta</a></li>
             <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
           </ul>
         </div>
@@ -102,6 +103,7 @@ if (!isset($_SESSION['username'])) {
         <li><a href="<?= BASEURL; ?>/gscholar">Google Schoolar</a></li>
         <li><a href="<?= BASEURL; ?>/wos">Web of Science</a></li>
         <li><a href="<?= BASEURL; ?>/scopus">Scopus</a></li>
+        <li><a href="<?= BASEURL; ?>/sinta">Sinta</a></li>
         <li><a href="<?= BASEURL; ?>/logout">Logout</a></li>
       </ul>
     </div>
