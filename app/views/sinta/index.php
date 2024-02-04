@@ -1,8 +1,4 @@
  <!-- Page content here -->
-<?php
- ini_set('display_errors', 1);
- error_reporting(E_ALL);
-?>
  <div class="px-5 mt-5 overflow-x" style="max-width: 100vw; overflow-x: auto;">
      <table id="myTable" class="display" style="width: 100%;">
          <thead>
