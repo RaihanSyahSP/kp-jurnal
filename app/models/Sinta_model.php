@@ -105,18 +105,18 @@ class Sinta_model {
         $recordsTotal = $recordsFiltered = 0;
 
         ## Define conditions
-        if (!empty($params['search']['value'])) {
-            $whereWos = " WHERE wos_documents.doi LIKE '%" . $params['search']['value'] . "%' 
-                      OR wos_documents.title LIKE '%" . $params['search']['value'] . "%'
-                      OR authors.id_sinta LIKE '%" . $params['search']['value'] . "%'
-                      OR authors.fullname LIKE '%" . $params['search']['value'] . "%'
-                      OR wos_documents.authors LIKE '%" . $params['search']['value'] . "%'
-                      OR wos_documents.journal_name LIKE '%" . $params['search']['value'] . "%'
-                      OR wos_documents.citation LIKE '%" . $params['search']['value'] . "%'
-                      OR wos_documents.publish_year LIKE '%" . $params['search']['value'] . "%'
-                      OR wos_documents.issn LIKE '%" . $params['search']['value'] . "%'
-                      OR wos_documents.url LIKE '%" . $params['search']['value'] . "%'";
-        }
+        // if (!empty($params['search']['value'])) {
+        //     $whereWos = " WHERE wos_documents.doi LIKE '%" . $params['search']['value'] . "%' 
+        //               OR wos_documents.title LIKE '%" . $params['search']['value'] . "%'
+        //               OR authors.id_sinta LIKE '%" . $params['search']['value'] . "%'
+        //               OR authors.fullname LIKE '%" . $params['search']['value'] . "%'
+        //               OR wos_documents.authors LIKE '%" . $params['search']['value'] . "%'
+        //               OR wos_documents.journal_name LIKE '%" . $params['search']['value'] . "%'
+        //               OR wos_documents.citation LIKE '%" . $params['search']['value'] . "%'
+        //               OR wos_documents.publish_year LIKE '%" . $params['search']['value'] . "%'
+        //               OR wos_documents.issn LIKE '%" . $params['search']['value'] . "%'
+        //               OR wos_documents.url LIKE '%" . $params['search']['value'] . "%'";
+        // }
 
         // Untuk gscholar_documents
         if (!empty($params['search']['value'])) {
@@ -132,19 +132,19 @@ class Sinta_model {
               OR gscholar_documents.url LIKE '%" . $params['search']['value'] . "%'";
         }
 
-        // Untuk scopus_documents
-        if (!empty($params['search']['value'])) {
-            $whereScopus = " WHERE scopus_documents.doi LIKE '%" . $params['search']['value'] . "%' 
-              OR scopus_documents.title LIKE '%" . $params['search']['value'] . "%'
-              OR authors.id_sinta LIKE '%" . $params['search']['value'] . "%'
-              OR authors.fullname LIKE '%" . $params['search']['value'] . "%'
-              OR scopus_documents.publication_name LIKE '%" . $params['search']['value'] . "%'
-              OR scopus_documents.creator LIKE '%" . $params['search']['value'] . "%'
-              OR scopus_documents.cover_date LIKE '%" . $params['search']['value'] . "%'
-              OR scopus_documents.issn LIKE '%" . $params['search']['value'] . "%'
-              OR scopus_documents.url LIKE '%" . $params['search']['value'] . "%'";
-        }
-
+        // // Untuk scopus_documents
+        // if (!empty($params['search']['value'])) {
+        //     $whereScopus = " WHERE scopus_documents.doi LIKE '%" . $params['search']['value'] . "%' 
+        //       OR scopus_documents.title LIKE '%" . $params['search']['value'] . "%'
+        //       OR authors.id_sinta LIKE '%" . $params['search']['value'] . "%'
+        //       OR authors.fullname LIKE '%" . $params['search']['value'] . "%'
+        //       OR scopus_documents.publication_name LIKE '%" . $params['search']['value'] . "%'
+        //       OR scopus_documents.creator LIKE '%" . $params['search']['value'] . "%'
+        //       OR scopus_documents.cover_date LIKE '%" . $params['search']['value'] . "%'
+        //       OR scopus_documents.issn LIKE '%" . $params['search']['value'] . "%'
+        //       OR scopus_documents.url LIKE '%" . $params['search']['value'] . "%'";
+        // }
+            
 
         ## Convert column array to select value
         $selectGscholar = implode(", ", $columnsGscholar);
@@ -161,12 +161,12 @@ class Sinta_model {
             "SELECT " . $selectScopus .
             " FROM " . $this->tableAuthors .
             " JOIN " . $this->tableScopus_doc . " ON authors.id_sinta = scopus_documents.id_sinta_author" .
-            $whereScopus .
+            // $whereScopus .
             " UNION " .
             "SELECT " . $selectWos .
             " FROM " . $this->tableAuthors .
             " JOIN " . $this->tableWos_doc . " ON authors.id_sinta = wos_documents.id_sinta_author" .
-            $whereWos .
+            // $whereWos .
             // " ORDER BY " . $columnOrder[$params['order'][0]['column']] . " " . $params['order'][0]['dir'] .
             " LIMIT " . $params['start'] . "," . $params['length'] . "";
 
