@@ -113,7 +113,7 @@
              "pageLength": 10,
              "lengthMenu": [10, 25, 50, 75, 100],
              "ajax": {
-                 "url": "/sinta/getDataTableSinta",
+                 "url": "/scopus/getDataTableScopus",
                  "type": "post",
                  "datatype": "json"
              },
