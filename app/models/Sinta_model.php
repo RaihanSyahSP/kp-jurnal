@@ -203,7 +203,6 @@ class Sinta_model {
             $recordsFiltered = $recordsTotal; // Jika tidak ada kondisi WHERE pada jumlah total, maka sama dengan jumlah total
         }
 
-        var_dump($documentsResult);
         return array(
             "draw" => intval($params['draw']),
             "recordsTotal" => intval($recordsTotal),
