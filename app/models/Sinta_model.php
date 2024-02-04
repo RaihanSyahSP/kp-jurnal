@@ -1,7 +1,6 @@
 <?php
 
 class Sinta_model {
-    private $tableSinta_doc = 'sinta_union';
     private $tableAuthors = 'authors';
     private $tableGscholar_doc = 'gscholar_documents';
     private $tableScopus_doc = 'scopus_documents';

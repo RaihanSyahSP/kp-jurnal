@@ -4,7 +4,7 @@ class Sinta extends Controller
 {
     public function index()
     {
-        $data['judul'] = 'Wos';
+        $data['judul'] = 'Sinta';
         $this->view('templates/header', $data);
         $this->view('sinta/index', $data);
         $this->view('templates/footer');
