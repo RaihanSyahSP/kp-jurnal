@@ -99,7 +99,7 @@
                              $('<table/>').append(data) :
                              false;
                      }
-                 }
+                 }    
              },
              "fixedHeader": true,
              "buttons": [{
