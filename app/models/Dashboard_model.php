@@ -7,6 +7,7 @@ class Dashboard_model
     private $tableWos_doc = 'wos_documents';
     private $tableScopus_doc = 'scopus_documents';
     private $tableBook_summary = 'book_summary';
+    private $tableBook_documents = 'book_documents';
     private $db;
 
     public function __construct()
@@ -79,13 +80,17 @@ class Dashboard_model
         );
     }
 
-    public function getTotalCitationCountGscholar()
+    public function getTotalCitationCountGscholar($startYear = "2019", $endYear = "2023")
     {
         $this->db->query(
             "SELECT SUM(citation) as total " .
-                " FROM " . $this->tableGscholar_doc . 
-                " WHERE publish_year > 2018"
+            " FROM " . $this->tableGscholar_doc .
+            " WHERE publish_year BETWEEN :startYear AND :endYear"
         );
+
+        // Bind parameters
+        $this->db->bind(':startYear', $startYear);
+        $this->db->bind(':endYear', $endYear);
 
         $totalQueryResult = $this->db->single();
         $recordsTotal = $totalQueryResult['total'];
@@ -154,13 +159,19 @@ class Dashboard_model
             );
     }
     
-    public function getTotalCountInReputableInternationalJournals () {
+    public function getTotalCountInReputableInternationalJournals ($startYear = "2019", $endYear = "2023") {
         $this->db->query(
             "SELECT COUNT(DISTINCT scopus_documents.id) + COUNT(DISTINCT wos_documents.id) AS total_publikasi_internasional " .
                 " FROM authors " .
                 " LEFT JOIN " . $this->tableScopus_doc . " ON authors.id_sinta = " . $this->tableScopus_doc . ".id_sinta_author  " .
-                " LEFT JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author " 
+                " LEFT JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author " . 
+                " WHERE YEAR(scopus_documents.cover_date) BETWEEN :startYear AND :endYear " .
+                " AND wos_documents.publish_year BETWEEN :startYear AND :endYear "  
         );
+
+        // Bind parameters
+        $this->db->bind(':startYear', $startYear);
+        $this->db->bind(':endYear', $endYear);
 
         $totalQueryResult = $this->db->single();
         $recordsTotal = $totalQueryResult['total_publikasi_internasional'];
@@ -225,13 +236,19 @@ class Dashboard_model
             );
     }
 
-    public function getTotalBookCount()
+    public function getTotalBookCount($startYear = "2019", $endYear = "2023")
     {
         $this->db->query(
             "SELECT COUNT(DISTINCT book_summary.id) as total " .
-                " FROM book_summary " .
-                " JOIN " . $this->tableAuthors . " ON authors.id_sinta = " . $this->tableBook_summary . ".id_sinta  " 
+            " FROM book_summary " .
+            " JOIN " . $this->tableAuthors . " ON authors.id_sinta = " . $this->tableBook_summary . ".id_sinta  " .
+            " JOIN " . $this->tableBook_documents . " ON authors.id_sinta = " . $this->tableBook_documents . ".id_sinta_author " .
+            " WHERE book_documents.year BETWEEN :startYear AND :endYear"
         );
+
+        // Bind parameters
+        $this->db->bind(':startYear', $startYear);
+        $this->db->bind(':endYear', $endYear);
 
         $totalQueryResult = $this->db->single();
         $recordsTotal = $totalQueryResult['total'];
@@ -239,20 +256,29 @@ class Dashboard_model
         return $recordsTotal;
     }
 
-    public function getTotalISSNJournal() {
+
+    public function getTotalISSNJournal($startYear = "2019", $endYear = "2023")
+    {
         $this->db->query(
             "SELECT COUNT(DISTINCT scopus_documents.id) + COUNT(DISTINCT wos_documents.id) as total
             FROM scopus_documents
             JOIN authors ON scopus_documents.id_sinta_author = authors.id_sinta
             JOIN wos_documents ON authors.id_sinta = wos_documents.id_sinta_author
-            WHERE wos_documents.issn != '' AND scopus_documents.issn != '';"
+            WHERE wos_documents.issn != '' AND scopus_documents.issn != ''
+            AND YEAR(scopus_documents.cover_date) BETWEEN :startYear AND :endYear 
+            AND wos_documents.publish_year BETWEEN :startYear AND :endYear ;"
         );
+
+        // Bind parameters
+        $this->db->bind(':startYear', $startYear);
+        $this->db->bind(':endYear', $endYear);
 
         $totalQueryResult = $this->db->single();
         $recordsTotal = $totalQueryResult['total'];
 
         return $recordsTotal;
     }
+
 
     public function getISSNJournal()
     {

@@ -50,13 +50,14 @@ class App
         $url = $_SERVER['REQUEST_URI'];
         $url = rtrim($url, "/");
         $url = ltrim($url, "/");
-        if (empty($url)) {
-            unset($url);
-        }
-        if (isset($url)) {
-            $url = filter_var($url, FILTER_SANITIZE_URL);
-            $url = explode('/', $url);
-            return $url;
+        $urlParts = parse_url($url);
+
+        $path = $urlParts['path'];
+
+        if (!empty($path)) {
+            $path = filter_var($path, FILTER_SANITIZE_URL);
+            $path = explode('/', $path);
+            return $path;
         } else {
             return [];
         }
@@ -100,7 +101,7 @@ class App
         <body class="bg-gray-100 h-screen flex items-center justify-center">
             <div class="text-center">
                 <h1 class="text-4xl font-bold text-gray-800 mb-4">404 Not Found</h1>
-                <p class="text-lg text-gray-600">Halaman Tidak Ditemukan!</p>
+                <p class="text-lg text-gray-600">Method Tidak Ditemukan!</p>
             </div>
         </body>
         </html>';

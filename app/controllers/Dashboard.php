@@ -19,8 +19,11 @@ class Dashboard extends Controller
 
     public function getTotalCitedCountGscholar()
     {
-        $params = $_REQUEST;
-        $res = $this->model('Dashboard_model')->getTotalCitationCountGscholar();
+        $yearRange = $_GET["yearRange"];
+        $years = explode("-", $yearRange);
+        $startYear = $years[0];
+        $endYear = $years[1];
+        $res = $this->model('Dashboard_model')->getTotalCitationCountGscholar($startYear, $endYear);
         echo json_encode($res);
     }
 
@@ -33,8 +36,11 @@ class Dashboard extends Controller
 
     public function getTotalInternationalPublication()
     {
-        $params = $_REQUEST;
-        $res = $this->model('Dashboard_model')->getTotalCountInReputableInternationalJournals();
+        $yearRange = $_GET["yearRange"];
+        $years = explode("-", $yearRange);
+        $startYear = $years[0];
+        $endYear = $years[1];
+        $res = $this->model('Dashboard_model')->getTotalCountInReputableInternationalJournals($startYear, $endYear);
         echo json_encode($res);
     }
 
@@ -45,14 +51,20 @@ class Dashboard extends Controller
     }
 
     public function getTotalBook() {
-        $params = $_REQUEST;
-        $res = $this->model('Dashboard_model')->getTotalBookCount();
+        $yearRange = $_GET["yearRange"];
+        $years = explode("-", $yearRange);
+        $startYear = $years[0];
+        $endYear = $years[1];
+        $res = $this->model('Dashboard_model')->getTotalBookCount($startYear, $endYear);
         echo json_encode($res);
     }
 
     public function getTotalISSNPublication() {
-        $params = $_REQUEST;
-        $res = $this->model('Dashboard_model')->getTotalISSNJournal();
+        $yearRange = $_GET["yearRange"];
+        $years = explode("-", $yearRange);
+        $startYear = $years[0];
+        $endYear = $years[1];
+        $res = $this->model('Dashboard_model')->getTotalISSNJournal($startYear, $endYear);
         echo json_encode($res);
     }
 

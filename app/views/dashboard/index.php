@@ -1,4 +1,20 @@
 <div class="container items-center px-4 py-8 m-auto mt-5">
+
+    <div class="flex flex-wrap items-center justify-center gap-3 md:justify-between">
+        <details class="dropdown">
+            <summary class="m-1 btn">Rentang Tahun</summary>
+            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52" id="yearRange">
+                <li value="2004-2008"><a>2004-2008</a></li>
+                <li value="2009-2013"><a>2009-2013</a></li>
+                <li value="2014-2018"><a>2014-2018</a></li>
+                <li value="2019-2023"><a>2019-2023</a></li>
+                <li value="2024-2028"><a>2024-2028</a></li>
+            </ul>
+        </details>
+
+        <h1 class="text-base font-semibold md:text-2xl md:font-bold">Rentang Tahun : <span id="rentang_tahun">2019-2023</span></h1>
+    </div>
+
     <div class="flex flex-wrap pb-3 mx-4 md:mx-24 lg:mx-0">
         <div class="w-full p-2 lg:w-1/4 md:w-1/2">
             <div class="flex flex-col px-6 py-10 overflow-hidden bg-white hover:bg-gradient-to-br hover:from-purple-400 hover:via-blue-400 hover:to-blue-500 rounded-xl shadow-lg duration-300 hover:shadow-2xl group">
@@ -359,72 +375,111 @@
         const loadingSpinnerClass = 'loading loading-spinner loading-lg'
 
         // Ajax call to get total citation count
-        $('#totalCitationCount').addClass(loadingSpinnerClass);
-        $.ajax({
-            url: 'dashboard/getTotalCitedCountGscholar',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Update the content of the h1 element with the fetched data
-                $('#totalCitationCount').text(response);
-                $('#totalCitationCount').removeClass(loadingSpinnerClass);
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
-                $('#totalCitationCount').addClass(loadingSpinnerClass);
-            }
+        function getTotalCitation(yearRange) {
+            $('#totalCitationCount').addClass(loadingSpinnerClass);
+            $.ajax({
+                url: 'dashboard/getTotalCitedCountGscholar',
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    yearRange: yearRange
+                },
+                success: function(response) {
+                    // Update the content of the h1 element with the fetched data
+                    var citationCount = response == null ? "0" : response;
+                    $('#totalCitationCount').text(citationCount);
+                    $('#totalCitationCount').removeClass(loadingSpinnerClass);
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                    $('#totalCitationCount').addClass(loadingSpinnerClass);
+                }
+            });
+        }
+
+        function getTotalInternationalJournal(yearRange) {
+            // Ajax call to get total international journal count
+            $('#totalInternationalJournal').addClass(loadingSpinnerClass);
+            $.ajax({
+                url: 'dashboard/getTotalInternationalPublication',
+                method: 'GET',
+                dataType: 'json',
+                data : {
+                    yearRange: yearRange
+                },
+                success: function(response) {
+                    // Update the content of the h1 element with the fetched data
+                    $('#totalInternationalJournal').text(response);
+                    $('#totalInternationalJournal').removeClass(loadingSpinnerClass);
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                    $('#totalInternationalJournal').addClass(loadingSpinnerClass);
+                }
+            });
+        }
+
+        function getTotalBook(yearRange) {
+            // Ajax call to get total international journal count
+            $('#totalBook').addClass(loadingSpinnerClass);
+            $.ajax({
+                url: 'dashboard/getTotalBook',
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    yearRange: yearRange
+                },
+                success: function(response) {
+                    // Update the content of the h1 element with the fetched data
+                    $('#totalBook').text(response);
+                    $('#totalBook').removeClass(loadingSpinnerClass);
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                    $('#totalBook').addClass(loadingSpinnerClass);
+                }
+            });
+
+        }
+
+
+        function getTotalISSNJournal(yearRange) {
+            // Ajax call to get total issn journal
+            $('#totalISSNJournal').addClass(loadingSpinnerClass);
+            $.ajax({
+                url: 'dashboard/getTotalISSNPublication',
+                method: 'GET',
+                dataType: 'json',
+                data : {
+                    yearRange: yearRange
+                },
+                success: function(response) {
+                    // Update the content of the h1 element with the fetched data
+                    $('#totalISSNJournal').text(response);
+                    $('#totalISSNJournal').removeClass(loadingSpinnerClass);
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                    $('#totalISSNJournal').addClass(loadingSpinnerClass);
+                }
+            });
+        }
+
+        // Event listener for dropdown change
+        $('#yearRange li').click(function() {
+            var selectedYearRange = $(this).attr('value');
+            $('#rentang_tahun').text(selectedYearRange);
+            getTotalBook(selectedYearRange);
+            getTotalCitation(selectedYearRange);
+            getTotalISSNJournal(selectedYearRange);
+            getTotalInternationalJournal(selectedYearRange);
         });
 
-        // Ajax call to get total international journal count
-        $('#totalInternationalJournal').addClass(loadingSpinnerClass);
-        $.ajax({
-            url: 'dashboard/getTotalInternationalPublication',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Update the content of the h1 element with the fetched data
-                $('#totalInternationalJournal').text(response);
-                $('#totalInternationalJournal').removeClass(loadingSpinnerClass);
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
-                $('#totalInternationalJournal').addClass(loadingSpinnerClass);
-            }
-        });
-
-        // Ajax call to get total international journal count
-        $('#totalBook').addClass(loadingSpinnerClass);
-        $.ajax({
-            url: 'dashboard/getTotalBook',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Update the content of the h1 element with the fetched data
-                $('#totalBook').text(response);
-                $('#totalBook').removeClass(loadingSpinnerClass);
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
-                $('#totalBook').addClass(loadingSpinnerClass);
-            }
-        });
-
-        // Ajax call to get total issn journal
-        $('#totalISSNJournal').addClass(loadingSpinnerClass);
-        $.ajax({
-            url: 'dashboard/getTotalISSNPublication',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Update the content of the h1 element with the fetched data
-                $('#totalISSNJournal').text(response);
-                $('#totalISSNJournal').removeClass(loadingSpinnerClass);
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
-                $('#totalISSNJournal').addClass(loadingSpinnerClass);
-            }
-        });
+        var defaultYearRange = "2019-2023";
+        getTotalBook(defaultYearRange);
+        getTotalCitation(defaultYearRange);
+        getTotalISSNJournal(defaultYearRange);
+        getTotalInternationalJournal(defaultYearRange);
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
